@@ -78,6 +78,7 @@ La liste complète des composants, avec un exemple pour chacun, se trouve dans [
 - **Bases** : `neutral`, `zinc`, `slate`, `stone`, `gray`. C'est la teinte des gris utilisés pour les fonds, les bordures et le texte atténué.
 - **Couleurs** : `neutral`, `blue`, `green`, `violet`, `rose`, `red`, `orange`, `yellow`. Elles définissent `--primary` et `--ring`.
 - **Rayon** : la variable `--radius`. Elle sert à calculer `rounded-sm`, `rounded-md`, `rounded-lg` et `rounded-xl`.
+- **Ombres** : les variables `--shadow-2xs` à `--shadow-2xl`, reliées aux classes `shadow-*` de Tailwind. Par défaut ce sont exactement les ombres de Tailwind ; `render_theme(shadow={...})` les calcule à partir d'une ombre de base (couleur, opacité, flou, étalement, décalage X et Y), et l'éditeur de thèmes les règle. Un projet existant les obtient avec `pyblade-ui theme set`.
 
 Les variables suivent le format de shadcn/ui : `--background`, `--foreground`, `--card`, `--popover`, `--primary`, `--secondary`, `--muted`, `--accent`, `--destructive`, `--border`, `--input`, `--ring` et `--chart-1` à `--chart-5`. Deux couples s'ajoutent : `--success`/`--success-foreground` et `--warning`/`--warning-foreground`. Elles sont exposées à Tailwind via `@theme inline`, ce qui permet d'écrire `bg-primary`, `text-muted-foreground`, `border-border`, etc.
 

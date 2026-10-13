@@ -83,6 +83,47 @@ TOKENS = [
 ]
 
 
+SHADOW_TOKENS = ["shadow-2xs", "shadow-xs", "shadow-sm", "shadow-md", "shadow-lg", "shadow-xl", "shadow-2xl"]
+
+# One shadow, from which the whole scale is built. These are Tailwind's: with them the scale is exactly
+# Tailwind's own shadow-2xs ... shadow-2xl.
+DEFAULT_SHADOW = {"color": "oklch(0 0 0)", "opacity": 0.1, "blur": 3, "spread": 0, "x": 0, "y": 1}
+
+# Each size, as layers relative to the base shadow: (offset factor, blur factor, spread added, opacity factor)
+SHADOW_SCALE = {
+    "shadow-2xs": [(1, 0, 0, 0.5)],
+    "shadow-xs": [(1, 2 / 3, 0, 0.5)],
+    "shadow-sm": [(1, 1, 0, 1), (1, 2 / 3, -1, 1)],
+    "shadow-md": [(4, 2, -1, 1), (2, 4 / 3, -2, 1)],
+    "shadow-lg": [(10, 5, -3, 1), (4, 2, -4, 1)],
+    "shadow-xl": [(20, 25 / 3, -5, 1), (8, 10 / 3, -6, 1)],
+    "shadow-2xl": [(25, 50 / 3, -12, 2.5)],
+}
+
+
+def _px(n: float) -> str:
+    n = round(n, 2)
+    return "0" if n == 0 else f"{n:g}px"
+
+
+def shadows(shadow: dict | None = None) -> dict[str, str]:
+    """The shadow-2xs ... shadow-2xl values for a base shadow (color, opacity, blur, spread, x, y)."""
+    s = {**DEFAULT_SHADOW, **(shadow or {})}
+    color, opacity = s["color"], float(s["opacity"])
+    blur, spread, x, y = (float(s[k]) for k in ("blur", "spread", "x", "y"))
+    out = {}
+    for name, layers in SHADOW_SCALE.items():
+        parts = []
+        for offset, blur_factor, spread_add, alpha in layers:
+            a = round(min(max(opacity * alpha, 0), 1) * 100, 1)
+            parts.append(
+                f"{_px(x * offset)} {_px(y * offset)} {_px(blur * blur_factor)} {_px(spread + spread_add)} "
+                f"color-mix(in oklab, {color} {a:g}%, transparent)"
+            )
+        out[name] = ", ".join(parts)
+    return out
+
+
 def tokens(base: str, color: str) -> tuple[dict[str, str], dict[str, str]]:
     """The light and dark values of every token, for a base and an accent color."""
     if base not in BASES:
@@ -148,11 +189,13 @@ def tokens(base: str, color: str) -> tuple[dict[str, str], dict[str, str]]:
     return light, dark
 
 
-def _block(selector: str, values: dict[str, str], radius: str | None = None) -> str:
+def _block(selector: str, values: dict[str, str], radius: str | None = None, shadow: dict | None = None) -> str:
     lines = [f"{selector} {{"]
     if radius is not None:
         lines.append(f"  --radius: {radius};")
     lines += [f"  --{name}: {values[name]};" for name in TOKENS]
+    if shadow is not None:
+        lines += [f"  --{name}: {value};" for name, value in shadows(shadow).items()]
     lines.append("}")
     return "\n".join(lines)
 
@@ -160,6 +203,7 @@ def _block(selector: str, values: dict[str, str], radius: str | None = None) -> 
 def _theme_inline() -> str:
     lines = ["@theme inline {"]
     lines += [f"  --color-{name}: var(--{name});" for name in TOKENS]
+    lines += [f"  --{name}: var(--{name});" for name in SHADOW_TOKENS]
     lines += [
         "  --radius-sm: calc(var(--radius) - 4px);",
         "  --radius-md: calc(var(--radius) - 2px);",
@@ -183,14 +227,20 @@ BASE_LAYER = """@layer base {
 }"""
 
 
-def render_theme(base: str = "neutral", color: str = "neutral", radius: str = "0.625rem", custom: str = "") -> str:
-    """The theme stylesheet, with the project's own overrides kept at the end."""
+def render_theme(
+    base: str = "neutral", color: str = "neutral", radius: str = "0.625rem", custom: str = "", shadow: dict | None = None
+) -> str:
+    """The theme stylesheet, with the project's own overrides kept at the end.
+
+    `shadow` sets the base shadow the scale is built from (see DEFAULT_SHADOW); without it the shadows
+    are Tailwind's own.
+    """
     light, dark = tokens(base, color)
 
     parts = [
         HEADER.format(base=base, color=color, radius=radius),
         "@custom-variant dark (&:where(.dark, .dark *));",
-        _block(":root", light, radius),
+        _block(":root", light, radius, shadow or {}),
         _block(".dark", dark),
         _theme_inline(),
         BASE_LAYER,
