@@ -1,0 +1,5 @@
+@props({'direction': 'horizontal'})
+<div data-slot="resizable-group" data-direction="{{ direction }}" x-data="{ direction: '{{ direction }}' }" {{ attributes.cn(
+    "flex h-full w-full",
+    {'horizontal': 'flex-row', 'vertical': 'flex-col'}[direction],
+) }}>{{ slot }}</div>

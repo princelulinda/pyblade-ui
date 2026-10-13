@@ -1,0 +1,27 @@
+@props({'name': '', 'trigger': '', 'open': False})
+<div data-slot="drawer" x-data="{
+    open: {{ str(bool(open)).lower() }}, drag: 0, start: null,
+    down(e) { this.start = e.clientY; e.target.setPointerCapture(e.pointerId) },
+    move(e) { if (this.start !== null) this.drag = Math.max(0, e.clientY - this.start) },
+    up() { if (this.drag > 100) this.open = false; this.drag = 0; this.start = null },
+  }"
+  x-on:keydown.escape.window="open = false"
+  x-on:drawer-open.window="$event.detail === '{{ name }}' && (open = true)"
+  x-on:drawer-close.window="$event.detail === '{{ name }}' && (open = false)"
+  x-effect="document.body.classList.toggle('overflow-hidden', open)"
+  class="contents">
+  <span data-slot="drawer-trigger" class="contents" x-on:click="open = true">{{ trigger }}</span>
+  <div x-show="open" x-cloak class="fixed inset-0 z-50">
+    <div data-slot="drawer-overlay" x-show="open" x-transition.opacity.duration.300ms class="fixed inset-0 bg-black/50" x-on:click="open = false"></div>
+    <div role="dialog" aria-modal="true" data-slot="drawer-content" x-show="open"
+      x-transition:enter="transition duration-300 ease-out" x-transition:enter-start="translate-y-full" x-transition:enter-end="translate-y-0"
+      x-transition:leave="transition duration-200 ease-in" x-transition:leave-start="translate-y-0" x-transition:leave-end="translate-y-full"
+      x-bind:style="{ transform: drag ? `translateY(${drag}px)` : '', transition: drag ? 'none' : '' }"
+      {{ attributes.cn("fixed inset-x-0 bottom-0 z-50 mt-24 flex max-h-[80vh] flex-col rounded-t-lg border-t bg-background") }}>
+      <div class="flex shrink-0 cursor-grab touch-none justify-center py-4 active:cursor-grabbing" x-on:pointerdown="down($event)" x-on:pointermove="move($event)" x-on:pointerup="up()" x-on:pointercancel="up()">
+        <div class="h-2 w-[100px] rounded-full bg-muted"></div>
+      </div>
+      {{ slot }}
+    </div>
+  </div>
+</div>

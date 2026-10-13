@@ -1,0 +1,9 @@
+<div role="region" aria-roledescription="carousel" data-slot="carousel"
+  x-data="{
+    atStart: true, atEnd: false,
+    update() { const t = this.$refs.track; this.atStart = t.scrollLeft <= 1; this.atEnd = t.scrollLeft + t.clientWidth >= t.scrollWidth - 1 },
+    go(step) { const t = this.$refs.track; t.scrollBy({ left: step * t.clientWidth, behavior: 'smooth' }) },
+  }"
+  x-init="$nextTick(() => update())"
+  x-on:keydown.left.prevent="go(-1)" x-on:keydown.right.prevent="go(1)"
+  {{ attributes.cn("relative") }}>{{ slot }}</div>

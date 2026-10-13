@@ -1,0 +1,947 @@
+{
+  "$schema": "./registry.schema.json",
+  "name": "pyblade-ui",
+  "items": [
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "Displays a button, in six variants and four sizes.",
+      "files": [
+        "ui/button.html"
+      ],
+      "usage": "<pb-ui.button variant=\"outline\" size=\"sm\">Save</pb-ui.button>"
+    },
+    {
+      "name": "button-link",
+      "type": "registry:ui",
+      "title": "Button link",
+      "description": "A link styled as a button.",
+      "files": [
+        "ui/button_link.html"
+      ],
+      "usage": "<pb-ui.button-link href=\"/docs\" variant=\"secondary\">Docs</pb-ui.button-link>"
+    },
+    {
+      "name": "badge",
+      "type": "registry:ui",
+      "title": "Badge",
+      "description": "A small status label.",
+      "files": [
+        "ui/badge.html"
+      ],
+      "usage": "<pb-ui.badge variant=\"success\">Paid</pb-ui.badge>"
+    },
+    {
+      "name": "card",
+      "type": "registry:ui",
+      "title": "Card",
+      "description": "A container with header, title, description, action, content and footer.",
+      "files": [
+        "ui/card.html",
+        "ui/card_header.html",
+        "ui/card_title.html",
+        "ui/card_description.html",
+        "ui/card_action.html",
+        "ui/card_content.html",
+        "ui/card_footer.html"
+      ],
+      "usage": "<pb-ui.card>\n  <pb-ui.card-header><pb-ui.card-title>Title</pb-ui.card-title></pb-ui.card-header>\n  <pb-ui.card-content>Body</pb-ui.card-content>\n</pb-ui.card>"
+    },
+    {
+      "name": "alert",
+      "type": "registry:ui",
+      "title": "Alert",
+      "description": "A callout for important messages.",
+      "files": [
+        "ui/alert.html",
+        "ui/alert_title.html",
+        "ui/alert_description.html"
+      ],
+      "usage": "<pb-ui.alert variant=\"destructive\">\n  <pb-ui.alert-title>Error</pb-ui.alert-title>\n  <pb-ui.alert-description>Your session has expired.</pb-ui.alert-description>\n</pb-ui.alert>"
+    },
+    {
+      "name": "avatar",
+      "type": "registry:ui",
+      "title": "Avatar",
+      "description": "An image with a fallback for the user.",
+      "files": [
+        "ui/avatar.html"
+      ],
+      "usage": "<pb-ui.avatar :src=\"user.photo_url\" fallback=\"JD\" />"
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "title": "Input",
+      "description": "A text field.",
+      "files": [
+        "ui/input.html"
+      ],
+      "usage": "<pb-ui.input name=\"email\" type=\"email\" placeholder=\"Email\" />"
+    },
+    {
+      "name": "textarea",
+      "type": "registry:ui",
+      "title": "Textarea",
+      "description": "A multi-line text field that grows with its content.",
+      "files": [
+        "ui/textarea.html"
+      ],
+      "usage": "<pb-ui.textarea name=\"bio\" rows=\"4\"></pb-ui.textarea>"
+    },
+    {
+      "name": "label",
+      "type": "registry:ui",
+      "title": "Label",
+      "description": "A label for a form control.",
+      "files": [
+        "ui/label.html"
+      ],
+      "usage": "<pb-ui.label for=\"email\">Email</pb-ui.label>"
+    },
+    {
+      "name": "select",
+      "type": "registry:ui",
+      "title": "Select",
+      "description": "A native select, styled.",
+      "files": [
+        "ui/select.html"
+      ],
+      "usage": "<pb-ui.select name=\"role\">\n  <option value=\"admin\">Admin</option>\n</pb-ui.select>"
+    },
+    {
+      "name": "checkbox",
+      "type": "registry:ui",
+      "title": "Checkbox",
+      "description": "A native checkbox, styled.",
+      "files": [
+        "ui/checkbox.html"
+      ],
+      "usage": "<pb-ui.checkbox id=\"terms\" name=\"terms\" />"
+    },
+    {
+      "name": "switch",
+      "type": "registry:ui",
+      "title": "Switch",
+      "description": "A toggle between on and off, on a native checkbox.",
+      "files": [
+        "ui/switch.html"
+      ],
+      "usage": "<pb-ui.switch name=\"notifications\" checked />"
+    },
+    {
+      "name": "separator",
+      "type": "registry:ui",
+      "title": "Separator",
+      "description": "A horizontal or vertical divider.",
+      "files": [
+        "ui/separator.html"
+      ],
+      "usage": "<pb-ui.separator orientation=\"vertical\" />"
+    },
+    {
+      "name": "skeleton",
+      "type": "registry:ui",
+      "title": "Skeleton",
+      "description": "A placeholder while content loads.",
+      "files": [
+        "ui/skeleton.html"
+      ],
+      "usage": "<pb-ui.skeleton class=\"h-4 w-48\" />"
+    },
+    {
+      "name": "progress",
+      "type": "registry:ui",
+      "title": "Progress",
+      "description": "A progress bar from 0 to 100.",
+      "files": [
+        "ui/progress.html"
+      ],
+      "usage": "<pb-ui.progress :value=\"66\" />"
+    },
+    {
+      "name": "table",
+      "type": "registry:ui",
+      "title": "Table",
+      "description": "A responsive table and its parts.",
+      "files": [
+        "ui/table.html",
+        "ui/table_header.html",
+        "ui/table_body.html",
+        "ui/table_row.html",
+        "ui/table_head.html",
+        "ui/table_cell.html",
+        "ui/table_caption.html"
+      ],
+      "usage": "<pb-ui.table>\n  <pb-ui.table-header><pb-ui.table-row><pb-ui.table-head>Name</pb-ui.table-head></pb-ui.table-row></pb-ui.table-header>\n  <pb-ui.table-body>\n    @for(user in users)\n    <pb-ui.table-row><pb-ui.table-cell>{{ user.name }}</pb-ui.table-cell></pb-ui.table-row>\n    @endfor\n  </pb-ui.table-body>\n</pb-ui.table>"
+    },
+    {
+      "name": "tabs",
+      "type": "registry:ui",
+      "title": "Tabs",
+      "description": "Panels shown one at a time.",
+      "files": [
+        "ui/tabs.html",
+        "ui/tabs_list.html",
+        "ui/tabs_trigger.html",
+        "ui/tabs_content.html"
+      ],
+      "dependencies": {
+        "js": [
+          "alpinejs"
+        ]
+      },
+      "usage": "<pb-ui.tabs value=\"account\">\n  <pb-ui.tabs-list>\n    <pb-ui.tabs-trigger value=\"account\">Account</pb-ui.tabs-trigger>\n    <pb-ui.tabs-trigger value=\"password\">Password</pb-ui.tabs-trigger>\n  </pb-ui.tabs-list>\n  <pb-ui.tabs-content value=\"account\">...</pb-ui.tabs-content>\n  <pb-ui.tabs-content value=\"password\">...</pb-ui.tabs-content>\n</pb-ui.tabs>"
+    },
+    {
+      "name": "accordion",
+      "type": "registry:ui",
+      "title": "Accordion",
+      "description": "Sections that expand one at a time.",
+      "files": [
+        "ui/accordion.html",
+        "ui/accordion_item.html"
+      ],
+      "dependencies": {
+        "js": [
+          "alpinejs"
+        ]
+      },
+      "usage": "<pb-ui.accordion value=\"q1\">\n  <pb-ui.accordion-item value=\"q1\" title=\"Is it accessible?\">Yes.</pb-ui.accordion-item>\n</pb-ui.accordion>"
+    },
+    {
+      "name": "dialog",
+      "type": "registry:ui",
+      "title": "Dialog",
+      "description": "A modal window, opened by its trigger or by name.",
+      "files": [
+        "ui/dialog.html",
+        "ui/dialog_header.html",
+        "ui/dialog_title.html",
+        "ui/dialog_description.html",
+        "ui/dialog_footer.html",
+        "ui/dialog_close.html"
+      ],
+      "registryDependencies": [
+        "button"
+      ],
+      "dependencies": {
+        "js": [
+          "alpinejs"
+        ]
+      },
+      "usage": "<pb-ui.dialog name=\"delete\">\n  <pb-slot:trigger><pb-ui.button variant=\"destructive\">Delete</pb-ui.button></pb-slot:trigger>\n  <pb-ui.dialog-header>\n    <pb-ui.dialog-title>Are you sure?</pb-ui.dialog-title>\n    <pb-ui.dialog-description>This cannot be undone.</pb-ui.dialog-description>\n  </pb-ui.dialog-header>\n  <pb-ui.dialog-footer>\n    <pb-ui.dialog-close><pb-ui.button variant=\"outline\">Cancel</pb-ui.button></pb-ui.dialog-close>\n  </pb-ui.dialog-footer>\n</pb-ui.dialog>\n{# Or from anywhere: $dispatch('dialog-open', 'delete') #}"
+    },
+    {
+      "name": "dropdown-menu",
+      "type": "registry:ui",
+      "title": "Dropdown menu",
+      "description": "A menu opened by a trigger.",
+      "files": [
+        "ui/dropdown_menu.html",
+        "ui/dropdown_menu_item.html",
+        "ui/dropdown_menu_label.html",
+        "ui/dropdown_menu_separator.html"
+      ],
+      "registryDependencies": [
+        "button"
+      ],
+      "dependencies": {
+        "js": [
+          "alpinejs"
+        ]
+      },
+      "usage": "<pb-ui.dropdown-menu align=\"end\">\n  <pb-slot:trigger><pb-ui.button variant=\"outline\">Open</pb-ui.button></pb-slot:trigger>\n  <pb-ui.dropdown-menu-label>My account</pb-ui.dropdown-menu-label>\n  <pb-ui.dropdown-menu-separator />\n  <pb-ui.dropdown-menu-item href=\"/profile\">Profile</pb-ui.dropdown-menu-item>\n  <pb-ui.dropdown-menu-item variant=\"destructive\">Log out</pb-ui.dropdown-menu-item>\n</pb-ui.dropdown-menu>"
+    },
+    {
+      "name": "tooltip",
+      "type": "registry:ui",
+      "title": "Tooltip",
+      "description": "A hint shown on hover and focus, in CSS only.",
+      "files": [
+        "ui/tooltip.html"
+      ],
+      "usage": "<pb-ui.tooltip text=\"Add to library\"><pb-ui.button variant=\"outline\">Hover</pb-ui.button></pb-ui.tooltip>"
+    },
+    {
+      "name": "toaster",
+      "type": "registry:ui",
+      "title": "Toaster",
+      "description": "Toast notifications, raised from JavaScript with toast({...}).",
+      "files": [
+        "ui/toaster.html"
+      ],
+      "dependencies": {
+        "js": [
+          "alpinejs"
+        ]
+      },
+      "usage": "<pb-ui.toaster position=\"bottom-right\" />\n<pb-ui.button x-on:click=\"toast({ title: 'Saved', variant: 'success' })\">Save</pb-ui.button>"
+    },
+    {
+      "name": "theme-script",
+      "type": "registry:ui",
+      "title": "Theme script",
+      "description": "Applies the saved light or dark mode before the page paints. Goes in <head>.",
+      "files": [
+        "ui/theme_script.html"
+      ],
+      "usage": "<pb-ui.theme-script />"
+    },
+    {
+      "name": "mode-toggle",
+      "type": "registry:ui",
+      "title": "Mode toggle",
+      "description": "Switches between light and dark mode.",
+      "files": [
+        "ui/mode_toggle.html"
+      ],
+      "registryDependencies": [
+        "theme-script"
+      ],
+      "dependencies": {
+        "js": [
+          "alpinejs"
+        ]
+      },
+      "usage": "<pb-ui.mode-toggle />"
+    },
+    {
+      "name": "radio-group",
+      "type": "registry:ui",
+      "title": "Radio group",
+      "description": "A set of options where only one can be chosen, on native radios.",
+      "files": [
+        "ui/radio_group.html",
+        "ui/radio_group_item.html"
+      ],
+      "usage": "<pb-ui.radio-group>\n  <label class=\"flex items-center gap-3\"><pb-ui.radio-group-item name=\"plan\" value=\"free\" checked /> Free</label>\n  <label class=\"flex items-center gap-3\"><pb-ui.radio-group-item name=\"plan\" value=\"pro\" /> Pro</label>\n</pb-ui.radio-group>"
+    },
+    {
+      "name": "slider",
+      "type": "registry:ui",
+      "title": "Slider",
+      "description": "A range input, styled, with its filled track.",
+      "files": [
+        "ui/slider.html"
+      ],
+      "dependencies": {
+        "js": [
+          "alpinejs"
+        ]
+      },
+      "usage": "<pb-ui.slider name=\"volume\" min=\"0\" max=\"100\" value=\"50\" />"
+    },
+    {
+      "name": "toggle",
+      "type": "registry:ui",
+      "title": "Toggle",
+      "description": "A two-state button that can be on or off.",
+      "files": [
+        "ui/toggle.html"
+      ],
+      "dependencies": {
+        "js": [
+          "alpinejs"
+        ]
+      },
+      "usage": "<pb-ui.toggle variant=\"outline\" aria-label=\"Bold\">B</pb-ui.toggle>"
+    },
+    {
+      "name": "toggle-group",
+      "type": "registry:ui",
+      "title": "Toggle group",
+      "description": "A set of toggles, single or multiple choice.",
+      "files": [
+        "ui/toggle_group.html",
+        "ui/toggle_group_item.html"
+      ],
+      "dependencies": {
+        "js": [
+          "alpinejs"
+        ]
+      },
+      "usage": "<pb-ui.toggle-group type=\"single\" value=\"center\">\n  <pb-ui.toggle-group-item value=\"left\">Left</pb-ui.toggle-group-item>\n  <pb-ui.toggle-group-item value=\"center\">Center</pb-ui.toggle-group-item>\n  <pb-ui.toggle-group-item value=\"right\">Right</pb-ui.toggle-group-item>\n</pb-ui.toggle-group>"
+    },
+    {
+      "name": "kbd",
+      "type": "registry:ui",
+      "title": "Kbd",
+      "description": "A keyboard key or shortcut.",
+      "files": [
+        "ui/kbd.html",
+        "ui/kbd_group.html"
+      ],
+      "usage": "<pb-ui.kbd-group><pb-ui.kbd>Ctrl</pb-ui.kbd><pb-ui.kbd>K</pb-ui.kbd></pb-ui.kbd-group>"
+    },
+    {
+      "name": "spinner",
+      "type": "registry:ui",
+      "title": "Spinner",
+      "description": "A loading indicator.",
+      "files": [
+        "ui/spinner.html"
+      ],
+      "usage": "<pb-ui.spinner class=\"size-6\" />"
+    },
+    {
+      "name": "aspect-ratio",
+      "type": "registry:ui",
+      "title": "Aspect ratio",
+      "description": "Keeps its content at a given ratio.",
+      "files": [
+        "ui/aspect_ratio.html"
+      ],
+      "usage": "<pb-ui.aspect-ratio ratio=\"16 / 9\" class=\"rounded-lg bg-muted\">\n  <img src=\"/photo.jpg\" alt=\"\" class=\"size-full object-cover\" />\n</pb-ui.aspect-ratio>"
+    },
+    {
+      "name": "scroll-area",
+      "type": "registry:ui",
+      "title": "Scroll area",
+      "description": "A scrollable region with a thin, themed scrollbar.",
+      "files": [
+        "ui/scroll_area.html"
+      ],
+      "usage": "<pb-ui.scroll-area class=\"h-72 w-48 rounded-md border\">...</pb-ui.scroll-area>"
+    },
+    {
+      "name": "button-group",
+      "type": "registry:ui",
+      "title": "Button group",
+      "description": "Joins buttons into one control.",
+      "files": [
+        "ui/button_group.html"
+      ],
+      "registryDependencies": [
+        "button"
+      ],
+      "usage": "<pb-ui.button-group>\n  <pb-ui.button variant=\"outline\">Archive</pb-ui.button>\n  <pb-ui.button variant=\"outline\">Report</pb-ui.button>\n</pb-ui.button-group>"
+    },
+    {
+      "name": "breadcrumb",
+      "type": "registry:ui",
+      "title": "Breadcrumb",
+      "description": "The path to the current page.",
+      "files": [
+        "ui/breadcrumb.html",
+        "ui/breadcrumb_list.html",
+        "ui/breadcrumb_item.html",
+        "ui/breadcrumb_link.html",
+        "ui/breadcrumb_page.html",
+        "ui/breadcrumb_separator.html",
+        "ui/breadcrumb_ellipsis.html"
+      ],
+      "usage": "<pb-ui.breadcrumb>\n  <pb-ui.breadcrumb-list>\n    <pb-ui.breadcrumb-item><pb-ui.breadcrumb-link href=\"/\">Home</pb-ui.breadcrumb-link></pb-ui.breadcrumb-item>\n    <pb-ui.breadcrumb-separator />\n    <pb-ui.breadcrumb-item><pb-ui.breadcrumb-page>Settings</pb-ui.breadcrumb-page></pb-ui.breadcrumb-item>\n  </pb-ui.breadcrumb-list>\n</pb-ui.breadcrumb>"
+    },
+    {
+      "name": "pagination",
+      "type": "registry:ui",
+      "title": "Pagination",
+      "description": "Links to the pages of a list.",
+      "files": [
+        "ui/pagination.html",
+        "ui/pagination_content.html",
+        "ui/pagination_item.html",
+        "ui/pagination_link.html",
+        "ui/pagination_previous.html",
+        "ui/pagination_next.html",
+        "ui/pagination_ellipsis.html"
+      ],
+      "usage": "<pb-ui.pagination>\n  <pb-ui.pagination-content>\n    <pb-ui.pagination-item><pb-ui.pagination-previous href=\"?page=1\" /></pb-ui.pagination-item>\n    <pb-ui.pagination-item><pb-ui.pagination-link href=\"?page=1\">1</pb-ui.pagination-link></pb-ui.pagination-item>\n    <pb-ui.pagination-item><pb-ui.pagination-link href=\"?page=2\" active>2</pb-ui.pagination-link></pb-ui.pagination-item>\n    <pb-ui.pagination-item><pb-ui.pagination-ellipsis /></pb-ui.pagination-item>\n    <pb-ui.pagination-item><pb-ui.pagination-next href=\"?page=3\" /></pb-ui.pagination-item>\n  </pb-ui.pagination-content>\n</pb-ui.pagination>"
+    },
+    {
+      "name": "empty",
+      "type": "registry:ui",
+      "title": "Empty",
+      "description": "An empty state, with media, title, description and actions.",
+      "files": [
+        "ui/empty.html",
+        "ui/empty_header.html",
+        "ui/empty_media.html",
+        "ui/empty_title.html",
+        "ui/empty_description.html",
+        "ui/empty_content.html"
+      ],
+      "usage": "<pb-ui.empty class=\"border\">\n  <pb-ui.empty-header>\n    <pb-ui.empty-title>No projects yet</pb-ui.empty-title>\n    <pb-ui.empty-description>Create your first project to get started.</pb-ui.empty-description>\n  </pb-ui.empty-header>\n  <pb-ui.empty-content><pb-ui.button>Create project</pb-ui.button></pb-ui.empty-content>\n</pb-ui.empty>"
+    },
+    {
+      "name": "field",
+      "type": "registry:ui",
+      "title": "Field",
+      "description": "A form field: label, control, description and error, wired to @error.",
+      "files": [
+        "ui/field.html",
+        "ui/field_label.html",
+        "ui/field_description.html",
+        "ui/field_error.html"
+      ],
+      "registryDependencies": [
+        "input"
+      ],
+      "usage": "<pb-ui.field :errors=\"form.errors\" name=\"email\">\n  <pb-ui.field-label for=\"email\">Email</pb-ui.field-label>\n  <pb-ui.input id=\"email\" name=\"email\" type=\"email\" />\n  <pb-ui.field-description>We never share it.</pb-ui.field-description>\n  <pb-ui.field-error :errors=\"form.errors\" name=\"email\" />\n</pb-ui.field>"
+    },
+    {
+      "name": "alert-dialog",
+      "type": "registry:ui",
+      "title": "Alert dialog",
+      "description": "A modal that asks for confirmation and cannot be dismissed by clicking outside.",
+      "files": [
+        "ui/alert_dialog.html",
+        "ui/alert_dialog_header.html",
+        "ui/alert_dialog_footer.html",
+        "ui/alert_dialog_title.html",
+        "ui/alert_dialog_description.html",
+        "ui/alert_dialog_action.html",
+        "ui/alert_dialog_cancel.html"
+      ],
+      "registryDependencies": [
+        "button"
+      ],
+      "dependencies": {
+        "js": [
+          "alpinejs"
+        ]
+      },
+      "usage": "<pb-ui.alert-dialog name=\"delete\">\n  <pb-slot:trigger><pb-ui.button variant=\"outline\">Delete</pb-ui.button></pb-slot:trigger>\n  <pb-ui.alert-dialog-header>\n    <pb-ui.alert-dialog-title>Are you absolutely sure?</pb-ui.alert-dialog-title>\n    <pb-ui.alert-dialog-description>This cannot be undone.</pb-ui.alert-dialog-description>\n  </pb-ui.alert-dialog-header>\n  <pb-ui.alert-dialog-footer>\n    <pb-ui.alert-dialog-cancel><pb-ui.button variant=\"outline\">Cancel</pb-ui.button></pb-ui.alert-dialog-cancel>\n    <pb-ui.alert-dialog-action><pb-ui.button>Continue</pb-ui.button></pb-ui.alert-dialog-action>\n  </pb-ui.alert-dialog-footer>\n</pb-ui.alert-dialog>"
+    },
+    {
+      "name": "sheet",
+      "type": "registry:ui",
+      "title": "Sheet",
+      "description": "A panel that slides in from an edge of the screen.",
+      "files": [
+        "ui/sheet.html",
+        "ui/sheet_header.html",
+        "ui/sheet_footer.html",
+        "ui/sheet_title.html",
+        "ui/sheet_description.html",
+        "ui/sheet_close.html"
+      ],
+      "registryDependencies": [
+        "button"
+      ],
+      "dependencies": {
+        "js": [
+          "alpinejs"
+        ]
+      },
+      "usage": "<pb-ui.sheet side=\"right\">\n  <pb-slot:trigger><pb-ui.button variant=\"outline\">Open</pb-ui.button></pb-slot:trigger>\n  <pb-ui.sheet-header>\n    <pb-ui.sheet-title>Edit profile</pb-ui.sheet-title>\n    <pb-ui.sheet-description>Save when you are done.</pb-ui.sheet-description>\n  </pb-ui.sheet-header>\n  <pb-ui.sheet-footer>\n    <pb-ui.sheet-close><pb-ui.button variant=\"outline\">Close</pb-ui.button></pb-ui.sheet-close>\n  </pb-ui.sheet-footer>\n</pb-ui.sheet>\n{# Or from anywhere: $dispatch('sheet-open', 'name') #}"
+    },
+    {
+      "name": "popover",
+      "type": "registry:ui",
+      "title": "Popover",
+      "description": "Rich content in a floating panel, opened by its trigger.",
+      "files": [
+        "ui/popover.html"
+      ],
+      "registryDependencies": [
+        "button"
+      ],
+      "dependencies": {
+        "js": [
+          "alpinejs"
+        ]
+      },
+      "usage": "<pb-ui.popover align=\"start\">\n  <pb-slot:trigger><pb-ui.button variant=\"outline\">Open</pb-ui.button></pb-slot:trigger>\n  <p class=\"text-sm\">Place any content here.</p>\n</pb-ui.popover>"
+    },
+    {
+      "name": "hover-card",
+      "type": "registry:ui",
+      "title": "Hover card",
+      "description": "A preview card shown on hover and focus, in CSS only.",
+      "files": [
+        "ui/hover_card.html"
+      ],
+      "usage": "<pb-ui.hover-card>\n  <pb-slot:trigger><a href=\"/u/ada\" class=\"underline\">@ada</a></pb-slot:trigger>\n  <p class=\"text-sm\">Ada Lovelace, first programmer.</p>\n</pb-ui.hover-card>"
+    },
+    {
+      "name": "collapsible",
+      "type": "registry:ui",
+      "title": "Collapsible",
+      "description": "A section that shows and hides its content.",
+      "files": [
+        "ui/collapsible.html",
+        "ui/collapsible_trigger.html",
+        "ui/collapsible_content.html"
+      ],
+      "registryDependencies": [
+        "button"
+      ],
+      "dependencies": {
+        "js": [
+          "alpinejs"
+        ]
+      },
+      "usage": "<pb-ui.collapsible>\n  <pb-ui.collapsible-trigger><pb-ui.button variant=\"ghost\">Toggle</pb-ui.button></pb-ui.collapsible-trigger>\n  <pb-ui.collapsible-content>Hidden content</pb-ui.collapsible-content>\n</pb-ui.collapsible>"
+    },
+    {
+      "name": "context-menu",
+      "type": "registry:ui",
+      "title": "Context menu",
+      "description": "A menu opened with a right click on its area.",
+      "files": [
+        "ui/context_menu.html"
+      ],
+      "registryDependencies": [
+        "dropdown-menu"
+      ],
+      "dependencies": {
+        "js": [
+          "alpinejs"
+        ]
+      },
+      "usage": "<pb-ui.context-menu>\n  <pb-slot:trigger><div class=\"grid h-36 place-items-center rounded-md border border-dashed\">Right click here</div></pb-slot:trigger>\n  <pb-ui.dropdown-menu-item>Back</pb-ui.dropdown-menu-item>\n  <pb-ui.dropdown-menu-item>Reload</pb-ui.dropdown-menu-item>\n</pb-ui.context-menu>"
+    },
+    {
+      "name": "command",
+      "type": "registry:ui",
+      "title": "Command",
+      "description": "A searchable list of commands, with keyboard navigation.",
+      "files": [
+        "ui/command.html",
+        "ui/command_input.html",
+        "ui/command_list.html",
+        "ui/command_empty.html",
+        "ui/command_group.html",
+        "ui/command_item.html",
+        "ui/command_separator.html",
+        "ui/command_shortcut.html"
+      ],
+      "dependencies": {
+        "js": [
+          "alpinejs"
+        ]
+      },
+      "usage": "<pb-ui.command class=\"rounded-lg border shadow-md\">\n  <pb-ui.command-input placeholder=\"Type a command or search...\" />\n  <pb-ui.command-list>\n    <pb-ui.command-empty>No results found.</pb-ui.command-empty>\n    <pb-ui.command-group heading=\"Suggestions\">\n      <pb-ui.command-item href=\"/calendar\">Calendar</pb-ui.command-item>\n      <pb-ui.command-item>Search emoji</pb-ui.command-item>\n    </pb-ui.command-group>\n  </pb-ui.command-list>\n</pb-ui.command>"
+    },
+    {
+      "name": "carousel",
+      "type": "registry:ui",
+      "title": "Carousel",
+      "description": "Slides you scroll through, with buttons, swipe and arrow keys.",
+      "files": [
+        "ui/carousel.html",
+        "ui/carousel_content.html",
+        "ui/carousel_item.html",
+        "ui/carousel_previous.html",
+        "ui/carousel_next.html"
+      ],
+      "dependencies": {
+        "js": [
+          "alpinejs"
+        ]
+      },
+      "usage": "<pb-ui.carousel class=\"w-full max-w-xs\">\n  <pb-ui.carousel-content>\n    <pb-ui.carousel-item>Slide 1</pb-ui.carousel-item>\n    <pb-ui.carousel-item>Slide 2</pb-ui.carousel-item>\n  </pb-ui.carousel-content>\n  <pb-ui.carousel-previous />\n  <pb-ui.carousel-next />\n</pb-ui.carousel>"
+    },
+    {
+      "name": "input-otp",
+      "type": "registry:ui",
+      "title": "Input OTP",
+      "description": "A one-time code input, one box per character, with paste support.",
+      "files": [
+        "ui/input_otp.html"
+      ],
+      "dependencies": {
+        "js": [
+          "alpinejs"
+        ]
+      },
+      "usage": "<pb-ui.input-otp name=\"code\" :length=\"6\" />"
+    },
+    {
+      "name": "sidebar",
+      "type": "registry:ui",
+      "title": "Sidebar",
+      "description": "A collapsible app sidebar: offcanvas or icon mode, a sheet on mobile, Ctrl/⌘+B, and its state kept in a cookie read on the server.",
+      "files": [
+        "ui/sidebar_provider.html",
+        "ui/sidebar.html",
+        "ui/sidebar_trigger.html",
+        "ui/sidebar_rail.html",
+        "ui/sidebar_inset.html",
+        "ui/sidebar_header.html",
+        "ui/sidebar_footer.html",
+        "ui/sidebar_separator.html",
+        "ui/sidebar_content.html",
+        "ui/sidebar_input.html",
+        "ui/sidebar_group.html",
+        "ui/sidebar_group_label.html",
+        "ui/sidebar_group_action.html",
+        "ui/sidebar_group_content.html",
+        "ui/sidebar_menu.html",
+        "ui/sidebar_menu_item.html",
+        "ui/sidebar_menu_button.html",
+        "ui/sidebar_menu_action.html",
+        "ui/sidebar_menu_badge.html",
+        "ui/sidebar_menu_skeleton.html",
+        "ui/sidebar_menu_sub.html",
+        "ui/sidebar_menu_sub_item.html",
+        "ui/sidebar_menu_sub_button.html"
+      ],
+      "dependencies": {
+        "js": [
+          "alpinejs"
+        ],
+        "python": []
+      },
+      "usage": "<pb-ui.sidebar-provider :open=\"sidebar_open\" collapsible=\"icon\">\n  <pb-ui.sidebar>\n    <pb-ui.sidebar-content>\n      <pb-ui.sidebar-group>\n        <pb-ui.sidebar-group-label>Application</pb-ui.sidebar-group-label>\n        <pb-ui.sidebar-menu>\n          <pb-ui.sidebar-menu-item>\n            <pb-ui.sidebar-menu-button href=\"/\" active tooltip=\"Home\"><span>Home</span></pb-ui.sidebar-menu-button>\n          </pb-ui.sidebar-menu-item>\n        </pb-ui.sidebar-menu>\n      </pb-ui.sidebar-group>\n    </pb-ui.sidebar-content>\n    <pb-ui.sidebar-rail />\n  </pb-ui.sidebar>\n  <pb-ui.sidebar-inset>\n    <header class=\"flex h-14 items-center gap-2 border-b px-4\"><pb-ui.sidebar-trigger /></header>\n    <main class=\"p-4\">...</main>\n  </pb-ui.sidebar-inset>\n</pb-ui.sidebar-provider>\n{# sidebar_open comes from the cookie: pyblade_ui.sidebar_open(request), or the Django context processor #}"
+    },
+    {
+      "name": "combobox",
+      "type": "registry:ui",
+      "title": "Combobox",
+      "description": "A select you can search, with keyboard navigation; its value is posted with the form.",
+      "files": [
+        "ui/combobox.html",
+        "ui/combobox_item.html"
+      ],
+      "dependencies": {
+        "js": [
+          "alpinejs"
+        ]
+      },
+      "usage": "<pb-ui.combobox name=\"framework\" placeholder=\"Select a framework...\" class=\"w-56\">\n  <pb-ui.combobox-item value=\"django\">Django</pb-ui.combobox-item>\n  <pb-ui.combobox-item value=\"flask\">Flask</pb-ui.combobox-item>\n  <pb-ui.combobox-item value=\"fastapi\">FastAPI</pb-ui.combobox-item>\n</pb-ui.combobox>"
+    },
+    {
+      "name": "calendar",
+      "type": "registry:ui",
+      "title": "Calendar",
+      "description": "A month grid to pick a date, localized, with min and max and arrow-key navigation.",
+      "files": [
+        "ui/calendar.html"
+      ],
+      "dependencies": {
+        "js": [
+          "alpinejs"
+        ]
+      },
+      "usage": "<pb-ui.calendar name=\"day\" value=\"2026-10-13\" locale=\"fr-FR\" :week_start=\"1\" class=\"rounded-md border\" />"
+    },
+    {
+      "name": "date-picker",
+      "type": "registry:ui",
+      "title": "Date picker",
+      "description": "A button that opens a calendar; the chosen date is posted as YYYY-MM-DD.",
+      "files": [
+        "ui/date_picker.html"
+      ],
+      "registryDependencies": [
+        "calendar"
+      ],
+      "dependencies": {
+        "js": [
+          "alpinejs"
+        ]
+      },
+      "usage": "<pb-ui.date-picker name=\"due\" placeholder=\"Pick a date\" locale=\"fr-FR\" :week_start=\"1\" class=\"w-60\" />"
+    },
+    {
+      "name": "data-table",
+      "type": "registry:ui",
+      "title": "Data table",
+      "description": "A table with filtering, sorting, pagination and row selection, from Python data.",
+      "files": [
+        "ui/data_table.html"
+      ],
+      "dependencies": {
+        "js": [
+          "alpinejs"
+        ]
+      },
+      "usage": "<pb-ui.data-table selectable search=\"email\" :page_size=\"5\"\n  :columns=\"[{'key': 'email', 'label': 'Email', 'sortable': True}, {'key': 'amount', 'label': 'Amount', 'sortable': True, 'align': 'right', 'format': 'currency'}]\"\n  :rows=\"[{'id': 1, 'email': 'ada@example.com', 'amount': 316}, {'id': 2, 'email': 'grace@example.com', 'amount': 242}]\" />"
+    },
+    {
+      "name": "chart",
+      "type": "registry:ui",
+      "title": "Chart",
+      "description": "Bar, line and area charts in SVG, themed with --chart-1 to --chart-5, with a tooltip.",
+      "files": [
+        "ui/chart.html"
+      ],
+      "dependencies": {
+        "js": [
+          "alpinejs"
+        ]
+      },
+      "usage": "<pb-ui.chart type=\"bar\" x=\"month\" :height=\"240\"\n  :series=\"[{'key': 'desktop', 'label': 'Desktop'}, {'key': 'mobile', 'label': 'Mobile'}]\"\n  :data=\"[{'month': 'Jan', 'desktop': 186, 'mobile': 80}, {'month': 'Feb', 'desktop': 305, 'mobile': 200}]\" />"
+    },
+    {
+      "name": "navigation-menu",
+      "type": "registry:ui",
+      "title": "Navigation menu",
+      "description": "Site navigation with panels that open on hover and click.",
+      "files": [
+        "ui/navigation_menu.html",
+        "ui/navigation_menu_list.html",
+        "ui/navigation_menu_item.html",
+        "ui/navigation_menu_trigger.html",
+        "ui/navigation_menu_content.html",
+        "ui/navigation_menu_link.html"
+      ],
+      "dependencies": {
+        "js": [
+          "alpinejs"
+        ]
+      },
+      "usage": "<pb-ui.navigation-menu>\n  <pb-ui.navigation-menu-list>\n    <pb-ui.navigation-menu-item>\n      <pb-ui.navigation-menu-trigger>Products</pb-ui.navigation-menu-trigger>\n      <pb-ui.navigation-menu-content class=\"w-64\">\n        <pb-ui.navigation-menu-link href=\"/ui\">UI kit</pb-ui.navigation-menu-link>\n      </pb-ui.navigation-menu-content>\n    </pb-ui.navigation-menu-item>\n    <pb-ui.navigation-menu-item>\n      <pb-ui.navigation-menu-link href=\"/docs\">Docs</pb-ui.navigation-menu-link>\n    </pb-ui.navigation-menu-item>\n  </pb-ui.navigation-menu-list>\n</pb-ui.navigation-menu>"
+    },
+    {
+      "name": "menubar",
+      "type": "registry:ui",
+      "title": "Menubar",
+      "description": "A desktop-style menu bar: File, Edit, View...",
+      "files": [
+        "ui/menubar.html",
+        "ui/menubar_menu.html",
+        "ui/menubar_trigger.html",
+        "ui/menubar_content.html",
+        "ui/menubar_item.html",
+        "ui/menubar_separator.html",
+        "ui/menubar_label.html",
+        "ui/menubar_shortcut.html"
+      ],
+      "dependencies": {
+        "js": [
+          "alpinejs"
+        ]
+      },
+      "usage": "<pb-ui.menubar>\n  <pb-ui.menubar-menu>\n    <pb-ui.menubar-trigger>File</pb-ui.menubar-trigger>\n    <pb-ui.menubar-content>\n      <pb-ui.menubar-item>New Tab <pb-ui.menubar-shortcut>⌘T</pb-ui.menubar-shortcut></pb-ui.menubar-item>\n      <pb-ui.menubar-separator />\n      <pb-ui.menubar-item>Print</pb-ui.menubar-item>\n    </pb-ui.menubar-content>\n  </pb-ui.menubar-menu>\n</pb-ui.menubar>"
+    },
+    {
+      "name": "drawer",
+      "type": "registry:ui",
+      "title": "Drawer",
+      "description": "A panel that rises from the bottom; drag its handle down to close it.",
+      "files": [
+        "ui/drawer.html",
+        "ui/drawer_header.html",
+        "ui/drawer_footer.html",
+        "ui/drawer_title.html",
+        "ui/drawer_description.html",
+        "ui/drawer_close.html"
+      ],
+      "registryDependencies": [
+        "button"
+      ],
+      "dependencies": {
+        "js": [
+          "alpinejs"
+        ]
+      },
+      "usage": "<pb-ui.drawer>\n  <pb-slot:trigger><pb-ui.button variant=\"outline\">Open</pb-ui.button></pb-slot:trigger>\n  <pb-ui.drawer-header>\n    <pb-ui.drawer-title>Move goal</pb-ui.drawer-title>\n    <pb-ui.drawer-description>Set your daily activity goal.</pb-ui.drawer-description>\n  </pb-ui.drawer-header>\n  <pb-ui.drawer-footer>\n    <pb-ui.drawer-close><pb-ui.button variant=\"outline\">Cancel</pb-ui.button></pb-ui.drawer-close>\n  </pb-ui.drawer-footer>\n</pb-ui.drawer>"
+    },
+    {
+      "name": "input-group",
+      "type": "registry:ui",
+      "title": "Input group",
+      "description": "An input with icons, text, buttons or a keyboard hint attached inside it.",
+      "files": [
+        "ui/input_group.html",
+        "ui/input_group_input.html",
+        "ui/input_group_textarea.html",
+        "ui/input_group_addon.html",
+        "ui/input_group_button.html",
+        "ui/input_group_text.html"
+      ],
+      "dependencies": {
+        "js": [
+          "alpinejs"
+        ]
+      },
+      "usage": "<pb-ui.input-group>\n  <pb-ui.input-group-input placeholder=\"example.com\" />\n  <pb-ui.input-group-addon><pb-ui.input-group-text>https://</pb-ui.input-group-text></pb-ui.input-group-addon>\n  <pb-ui.input-group-addon align=\"inline-end\"><pb-ui.input-group-button>Go</pb-ui.input-group-button></pb-ui.input-group-addon>\n</pb-ui.input-group>"
+    },
+    {
+      "name": "item",
+      "type": "registry:ui",
+      "title": "Item",
+      "description": "A row of content: media, title, description and actions.",
+      "files": [
+        "ui/item.html",
+        "ui/item_group.html",
+        "ui/item_separator.html",
+        "ui/item_media.html",
+        "ui/item_content.html",
+        "ui/item_title.html",
+        "ui/item_description.html",
+        "ui/item_actions.html"
+      ],
+      "usage": "<pb-ui.item variant=\"outline\">\n  <pb-ui.item-content>\n    <pb-ui.item-title>Two-factor authentication</pb-ui.item-title>\n    <pb-ui.item-description>Verify via email or phone number.</pb-ui.item-description>\n  </pb-ui.item-content>\n  <pb-ui.item-actions><pb-ui.button size=\"sm\">Enable</pb-ui.button></pb-ui.item-actions>\n</pb-ui.item>"
+    },
+    {
+      "name": "resizable",
+      "type": "registry:ui",
+      "title": "Resizable",
+      "description": "Panels you resize by dragging the handle between them, or with the arrow keys.",
+      "files": [
+        "ui/resizable_group.html",
+        "ui/resizable_panel.html",
+        "ui/resizable_handle.html"
+      ],
+      "dependencies": {
+        "js": [
+          "alpinejs"
+        ]
+      },
+      "usage": "<pb-ui.resizable-group direction=\"horizontal\" class=\"min-h-48 rounded-lg border\">\n  <pb-ui.resizable-panel :size=\"50\"><div class=\"p-6\">One</div></pb-ui.resizable-panel>\n  <pb-ui.resizable-handle with_handle />\n  <pb-ui.resizable-panel :size=\"50\"><div class=\"p-6\">Two</div></pb-ui.resizable-panel>\n</pb-ui.resizable-group>"
+    },
+    {
+      "name": "typography",
+      "type": "registry:ui",
+      "title": "Typography",
+      "description": "Text styles: headings, paragraph, lead, blockquote, list, inline code, and a prose wrapper for HTML content.",
+      "files": [
+        "ui/typography_h1.html",
+        "ui/typography_h2.html",
+        "ui/typography_h3.html",
+        "ui/typography_h4.html",
+        "ui/typography_p.html",
+        "ui/typography_lead.html",
+        "ui/typography_large.html",
+        "ui/typography_small.html",
+        "ui/typography_muted.html",
+        "ui/typography_blockquote.html",
+        "ui/typography_list.html",
+        "ui/typography_inline_code.html",
+        "ui/prose.html"
+      ],
+      "usage": "<pb-ui.typography-h1>The Joke Tax Chronicles</pb-ui.typography-h1>\n<pb-ui.typography-lead>Once upon a time, in a far-off land...</pb-ui.typography-lead>\n<pb-ui.prose>{!! article.html !!}</pb-ui.prose>"
+    },
+    {
+      "name": "login-form",
+      "type": "registry:block",
+      "title": "Login form",
+      "description": "A login card with email and password.",
+      "files": [
+        "blocks/login_form.html"
+      ],
+      "registryDependencies": [
+        "card",
+        "label",
+        "input",
+        "button"
+      ],
+      "usage": "<pb-blocks.login-form action=\"/login\">@csrf</pb-blocks.login-form>"
+    },
+    {
+      "name": "sidebar-layout",
+      "type": "registry:block",
+      "title": "Sidebar layout",
+      "description": "An application shell: a sidebar with brand, navigation, a collapsible group and the user, beside a header and your page.",
+      "files": [
+        "blocks/sidebar_layout.html"
+      ],
+      "registryDependencies": [
+        "sidebar",
+        "collapsible"
+      ],
+      "dependencies": {
+        "js": [
+          "alpinejs"
+        ]
+      },
+      "usage": "<pb-blocks.sidebar-layout :open=\"sidebar_open\" title=\"Dashboard\">\n  <p>Your page</p>\n</pb-blocks.sidebar-layout>"
+    }
+  ]
+}

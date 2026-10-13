@@ -1,0 +1,6 @@
+<button type="button" data-slot="sidebar-rail" x-on:click="toggle()" tabindex="-1" aria-label="Toggle Sidebar" title="Toggle Sidebar" {{ attributes.cn(
+    "absolute inset-y-0 z-20 hidden w-4 cursor-pointer transition-all ease-linear after:absolute after:inset-y-0 after:left-1/2 after:w-[2px] hover:after:bg-sidebar-border md:flex",
+    "group-data-[side=left]/sidebar:-right-4 group-data-[side=right]/sidebar:left-0 group-data-[side=left]/sidebar:cursor-w-resize group-data-[side=right]/sidebar:cursor-e-resize",
+    "group-data-[side=left]/sidebar:group-data-[state=collapsed]/sidebar:cursor-e-resize group-data-[side=right]/sidebar:group-data-[state=collapsed]/sidebar:cursor-w-resize",
+    "group-data-[collapsible=offcanvas]/sidebar:translate-x-0 group-data-[collapsible=offcanvas]/sidebar:after:left-full group-data-[side=left]/sidebar:group-data-[collapsible=offcanvas]/sidebar:-right-2 group-data-[side=right]/sidebar:group-data-[collapsible=offcanvas]/sidebar:-left-2",
+) }}></button>

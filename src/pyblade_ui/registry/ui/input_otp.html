@@ -1,0 +1,23 @@
+@props({'name': 'code', 'length': 6})
+<div data-slot="input-otp"
+  x-data="{
+    digits: Array({{ int(length) }}).fill(''),
+    boxes() { return [...this.$root.querySelectorAll('[data-slot=input-otp-slot]')] },
+    put(i, value) {
+      const chars = value.replace(/\s/g, '').split('');
+      if (!chars.length) { this.digits[i] = ''; return }
+      chars.forEach((c, k) => { if (i + k < this.digits.length) this.digits[i + k] = c });
+      const next = this.boxes()[Math.min(i + chars.length, this.digits.length - 1)];
+      if (next) next.focus();
+    },
+    back(i, e) { if (!this.digits[i] && i > 0) { e.preventDefault(); this.digits[i - 1] = ''; this.boxes()[i - 1].focus() } },
+  }"
+  {{ attributes.cn("flex items-center has-disabled:opacity-50") }}>
+  <input type="hidden" name="{{ name }}" x-bind:value="digits.join('')" />
+  <template x-for="(digit, i) in digits" x-bind:key="i">
+    <input data-slot="input-otp-slot" inputmode="numeric" autocomplete="one-time-code" maxlength="6" aria-label="Digit"
+      x-bind:value="digit" x-on:input="put(i, $event.target.value); $event.target.value = digits[i]"
+      x-on:keydown.backspace="back(i, $event)" x-on:focus="$event.target.select()"
+      class="relative -ml-px flex size-9 items-center justify-center border border-input bg-transparent text-center text-sm shadow-xs transition-all outline-none first:ml-0 first:rounded-l-md last:rounded-r-md focus:z-10 focus:border-ring focus:ring-[3px] focus:ring-ring/50 dark:bg-input/30" />
+  </template>
+</div>

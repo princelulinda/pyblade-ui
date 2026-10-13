@@ -1,0 +1,12 @@
+@props({'type': 'single', 'value': ''})
+<div role="group" data-slot="toggle-group"
+  x-data="{
+    type: '{{ type }}',
+    value: '{{ value }}'.split(',').filter(Boolean),
+    has(v) { return this.value.includes(v) },
+    toggle(v) {
+      if (this.type === 'single') { this.value = this.has(v) ? [] : [v]; return }
+      this.value = this.has(v) ? this.value.filter(x => x !== v) : [...this.value, v];
+    },
+  }"
+  {{ attributes.cn("flex w-fit items-center rounded-md [&>*]:rounded-none [&>*:first-child]:rounded-l-md [&>*:last-child]:rounded-r-md") }}>{{ slot }}</div>

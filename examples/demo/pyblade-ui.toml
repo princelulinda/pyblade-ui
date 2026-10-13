@@ -1,0 +1,13 @@
+# PyBlade UI configuration, read by the `pyblade-ui` command.
+[ui]
+# Where to install from: empty for the registry bundled with pyblade-ui,
+# otherwise a URL or a folder holding a registry.json.
+registry = ""
+# The Tailwind stylesheet of the project, and the theme it imports.
+css = "static/css/tailwind.css"
+theme_css = "static/css/theme.css"
+
+[theme]
+base = "neutral"
+color = "violet"
+radius = "0.625rem"

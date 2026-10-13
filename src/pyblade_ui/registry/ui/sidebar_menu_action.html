@@ -1,0 +1,5 @@
+@props({'show_on_hover': False})
+<button type="button" data-slot="sidebar-menu-action" {{ attributes.cn(
+    "absolute top-1.5 right-1 flex aspect-square w-5 cursor-pointer items-center justify-center rounded-md p-0 text-sidebar-foreground ring-sidebar-ring outline-hidden transition-transform peer-hover/menu-button:text-sidebar-accent-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 after:absolute after:-inset-2 md:after:hidden md:group-data-[collapsible=icon]/sidebar:hidden [&>svg]:size-4 [&>svg]:shrink-0",
+    {'True': 'group-focus-within/menu-item:opacity-100 group-hover/menu-item:opacity-100 peer-data-[active=true]/menu-button:text-sidebar-accent-foreground md:opacity-0', 'False': ''}[str(bool(show_on_hover))],
+) }}>{{ slot }}</button>

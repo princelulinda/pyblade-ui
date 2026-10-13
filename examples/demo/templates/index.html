@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PyBlade UI</title>
+  <pb-ui.theme-script />
+  <link rel="stylesheet" href="static/css/app.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.9/dist/cdn.min.js"></script>
+</head>
+<body class="min-h-screen">
+  <header class="sticky top-0 z-40 border-b bg-background/80 backdrop-blur">
+    <div class="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
+      <div class="flex items-center gap-2 font-semibold">
+        PyBlade UI <pb-ui.badge variant="secondary">v0.1</pb-ui.badge>
+      </div>
+      <div class="flex items-center gap-2">
+        <pb-ui.dropdown-menu align="end">
+          <pb-slot:trigger><pb-ui.button variant="ghost" size="sm">Theme</pb-ui.button></pb-slot:trigger>
+          <pb-ui.dropdown-menu-label>Accent</pb-ui.dropdown-menu-label>
+          <pb-ui.dropdown-menu-separator />
+          @for(color in colors)
+          <pb-ui.dropdown-menu-item>{{ color }}</pb-ui.dropdown-menu-item>
+          @endfor
+        </pb-ui.dropdown-menu>
+        <pb-ui.mode-toggle />
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto grid max-w-6xl gap-6 px-4 py-10 md:grid-cols-2 lg:grid-cols-3">
+    <pb-ui.card>
+      <pb-ui.card-header>
+        <pb-ui.card-title>Buttons</pb-ui.card-title>
+        <pb-ui.card-description>Six variants, four sizes.</pb-ui.card-description>
+      </pb-ui.card-header>
+      <pb-ui.card-content class="flex flex-wrap gap-2">
+        <pb-ui.button>Default</pb-ui.button>
+        <pb-ui.button variant="secondary">Secondary</pb-ui.button>
+        <pb-ui.button variant="outline">Outline</pb-ui.button>
+        <pb-ui.button variant="ghost">Ghost</pb-ui.button>
+        <pb-ui.button variant="destructive">Delete</pb-ui.button>
+        <pb-ui.button-link href="#" variant="link">Link</pb-ui.button-link>
+        <pb-ui.button size="sm" class="rounded-full">Pill</pb-ui.button>
+      </pb-ui.card-content>
+    </pb-ui.card>
+
+    <pb-ui.card>
+      <pb-ui.card-header>
+        <pb-ui.card-title>Badges &amp; avatars</pb-ui.card-title>
+        <pb-ui.card-description>Status at a glance.</pb-ui.card-description>
+      </pb-ui.card-header>
+      <pb-ui.card-content class="flex flex-col gap-4">
+        <div class="flex flex-wrap gap-2">
+          <pb-ui.badge>Default</pb-ui.badge>
+          <pb-ui.badge variant="secondary">Secondary</pb-ui.badge>
+          <pb-ui.badge variant="outline">Outline</pb-ui.badge>
+          <pb-ui.badge variant="success">Paid</pb-ui.badge>
+          <pb-ui.badge variant="warning">Pending</pb-ui.badge>
+          <pb-ui.badge variant="destructive">Failed</pb-ui.badge>
+        </div>
+        <div class="flex items-center gap-3">
+          <pb-ui.avatar fallback="AL" />
+          <pb-ui.avatar fallback="GH" class="size-10" />
+          <pb-ui.tooltip text="Grace Hopper"><pb-ui.avatar fallback="?" /></pb-ui.tooltip>
+        </div>
+      </pb-ui.card-content>
+    </pb-ui.card>
+
+    <pb-ui.card>
+      <pb-ui.card-header>
+        <pb-ui.card-title>Form</pb-ui.card-title>
+        <pb-ui.card-description>Native controls, styled.</pb-ui.card-description>
+      </pb-ui.card-header>
+      <pb-ui.card-content class="grid gap-4">
+        <div class="grid gap-2">
+          <pb-ui.label for="email">Email</pb-ui.label>
+          <pb-ui.input id="email" type="email" placeholder="ada@example.com" />
+        </div>
+        <div class="grid gap-2">
+          <pb-ui.label for="role">Role</pb-ui.label>
+          <pb-ui.select id="role"><option>Admin</option><option>Editor</option></pb-ui.select>
+        </div>
+        <div class="flex items-center justify-between">
+          <pb-ui.label><pb-ui.checkbox checked /> Remember me</pb-ui.label>
+          <pb-ui.label><pb-ui.switch checked /> Emails</pb-ui.label>
+        </div>
+      </pb-ui.card-content>
+      <pb-ui.card-footer class="justify-end gap-2">
+        <pb-ui.button variant="outline">Cancel</pb-ui.button>
+        <pb-ui.button x-on:click="toast({ title: 'Saved', description: 'Your settings were updated.' })">Save</pb-ui.button>
+      </pb-ui.card-footer>
+    </pb-ui.card>
+
+    <pb-ui.alert class="md:col-span-2 lg:col-span-1">
+      <pb-ui.alert-title>Heads up!</pb-ui.alert-title>
+      <pb-ui.alert-description>Components are copied into your project: edit them freely.</pb-ui.alert-description>
+    </pb-ui.alert>
+
+    <pb-ui.alert variant="destructive">
+      <pb-ui.alert-title>Payment failed</pb-ui.alert-title>
+      <pb-ui.alert-description>Check your card details and try again.</pb-ui.alert-description>
+    </pb-ui.alert>
+
+    <pb-ui.card>
+      <pb-ui.card-content class="grid gap-3">
+        <div class="flex justify-between text-sm"><span>Storage</span><span class="text-muted-foreground">66%</span></div>
+        <pb-ui.progress :value="66" />
+        <pb-ui.separator />
+        <div class="grid gap-2">
+          <pb-ui.skeleton class="h-4 w-3/4" />
+          <pb-ui.skeleton class="h-4 w-1/2" />
+        </div>
+      </pb-ui.card-content>
+    </pb-ui.card>
+
+    <pb-ui.card class="md:col-span-2">
+      <pb-ui.card-header>
+        <pb-ui.card-title>Team</pb-ui.card-title>
+        <pb-ui.card-description>Tabs and a table.</pb-ui.card-description>
+        <pb-ui.card-action>
+          <pb-ui.dialog name="invite" :open="dialog_open">
+            <pb-slot:trigger><pb-ui.button size="sm">Invite</pb-ui.button></pb-slot:trigger>
+            <pb-ui.dialog-header>
+              <pb-ui.dialog-title>Invite a member</pb-ui.dialog-title>
+              <pb-ui.dialog-description>They will receive an email with a link.</pb-ui.dialog-description>
+            </pb-ui.dialog-header>
+            <pb-ui.input type="email" placeholder="grace@example.com" />
+            <pb-ui.dialog-footer>
+              <pb-ui.dialog-close><pb-ui.button variant="outline">Cancel</pb-ui.button></pb-ui.dialog-close>
+              <pb-ui.button>Send invite</pb-ui.button>
+            </pb-ui.dialog-footer>
+          </pb-ui.dialog>
+        </pb-ui.card-action>
+      </pb-ui.card-header>
+      <pb-ui.card-content>
+        <pb-ui.tabs value="members">
+          <pb-ui.tabs-list>
+            <pb-ui.tabs-trigger value="members">Members</pb-ui.tabs-trigger>
+            <pb-ui.tabs-trigger value="invites">Invites</pb-ui.tabs-trigger>
+          </pb-ui.tabs-list>
+          <pb-ui.tabs-content value="members">
+            <pb-ui.table>
+              <pb-ui.table-header>
+                <pb-ui.table-row>
+                  <pb-ui.table-head>Name</pb-ui.table-head>
+                  <pb-ui.table-head>Role</pb-ui.table-head>
+                  <pb-ui.table-head class="text-right">Status</pb-ui.table-head>
+                </pb-ui.table-row>
+              </pb-ui.table-header>
+              <pb-ui.table-body>
+                @for(member in members)
+                <pb-ui.table-row>
+                  <pb-ui.table-cell class="font-medium">{{ member.name }}</pb-ui.table-cell>
+                  <pb-ui.table-cell>{{ member.role }}</pb-ui.table-cell>
+                  <pb-ui.table-cell class="text-right"><pb-ui.badge :variant="member.status">{{ member.status }}</pb-ui.badge></pb-ui.table-cell>
+                </pb-ui.table-row>
+                @endfor
+              </pb-ui.table-body>
+            </pb-ui.table>
+          </pb-ui.tabs-content>
+          <pb-ui.tabs-content value="invites">
+            <p class="py-6 text-center text-sm text-muted-foreground">No pending invites.</p>
+          </pb-ui.tabs-content>
+        </pb-ui.tabs>
+      </pb-ui.card-content>
+    </pb-ui.card>
+
+    <pb-ui.card>
+      <pb-ui.card-header><pb-ui.card-title>FAQ</pb-ui.card-title></pb-ui.card-header>
+      <pb-ui.card-content>
+        <pb-ui.accordion value="copy">
+          <pb-ui.accordion-item value="copy" title="Is it a dependency?">No. Components are copied into your project.</pb-ui.accordion-item>
+          <pb-ui.accordion-item value="theme" title="Can I change the theme?">Yes: pyblade-ui theme set --color rose.</pb-ui.accordion-item>
+          <pb-ui.accordion-item value="js" title="Does it need JavaScript?">Only Alpine.js, for interactive components.</pb-ui.accordion-item>
+        </pb-ui.accordion>
+      </pb-ui.card-content>
+    </pb-ui.card>
+
+    <div class="flex justify-center md:col-span-2 lg:col-span-3">
+      <pb-blocks.login-form action="#" />
+    </div>
+  </main>
+
+  <pb-ui.toaster />
+</body>
+</html>

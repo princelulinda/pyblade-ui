@@ -1,0 +1,2 @@
+@props({'size': 50, 'min': 10})
+<div data-slot="resizable-panel" data-min="{{ min }}" style="flex: {{ size }} 1 0px" {{ attributes.cn("min-h-0 min-w-0 overflow-hidden") }}>{{ slot }}</div>

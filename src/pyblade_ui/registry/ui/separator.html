@@ -1,0 +1,5 @@
+@props({'orientation': 'horizontal'})
+<div role="separator" aria-orientation="{{ orientation }}" data-slot="separator" {{ attributes.cn(
+    "shrink-0 bg-border",
+    {'horizontal': 'h-px w-full', 'vertical': 'h-full w-px self-stretch'}[orientation],
+) }}></div>

@@ -1,0 +1,2 @@
+<button type="button" role="menuitem" data-slot="menubar-trigger" x-on:click="active = active === value ? null : value" x-on:mouseenter="active && (active = value)"
+  x-bind:aria-expanded="active === value" x-bind:data-state="active === value ? 'open' : 'closed'" {{ attributes.cn("flex cursor-pointer items-center rounded-sm px-2 py-1 text-sm font-medium outline-hidden select-none hover:bg-accent focus:bg-accent focus:text-accent-foreground data-[state=open]:bg-accent data-[state=open]:text-accent-foreground") }}>{{ slot }}</button>

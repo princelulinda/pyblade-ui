@@ -1,0 +1,21 @@
+@props({'action': '', 'title': 'Login to your account', 'description': 'Enter your email below to login to your account'})
+<pb-ui.card class="w-full max-w-sm">
+  <pb-ui.card-header>
+    <pb-ui.card-title>{{ title }}</pb-ui.card-title>
+    <pb-ui.card-description>{{ description }}</pb-ui.card-description>
+  </pb-ui.card-header>
+  <pb-ui.card-content>
+    <form method="post" action="{{ action }}" class="flex flex-col gap-6">
+      {{ slot }}
+      <div class="grid gap-2">
+        <pb-ui.label for="email">Email</pb-ui.label>
+        <pb-ui.input id="email" name="email" type="email" placeholder="m@example.com" required />
+      </div>
+      <div class="grid gap-2">
+        <pb-ui.label for="password">Password</pb-ui.label>
+        <pb-ui.input id="password" name="password" type="password" required />
+      </div>
+      <pb-ui.button type="submit" class="w-full">Login</pb-ui.button>
+    </form>
+  </pb-ui.card-content>
+</pb-ui.card>

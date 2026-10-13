@@ -1,0 +1,2 @@
+@props({'errors': None, 'name': ''})
+<p role="alert" data-slot="field-error" {{ attributes.cn("text-sm font-normal text-destructive empty:hidden") }}>@if(errors and name)@error(name){{ message }}@enderror@endif{{ slot }}</p>

@@ -1,0 +1,11 @@
+[project]
+name = "pyblade-ui-demo"
+
+[stack]
+framework = "flask"
+css_framework = "tailwindcss"
+css_framework_version = "4"
+
+[paths]
+templates = "templates"
+components = "components"

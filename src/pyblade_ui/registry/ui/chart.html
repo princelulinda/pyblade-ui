@@ -1,0 +1,75 @@
+@props({'data': [], 'x': 'label', 'series': [], 'type': 'bar', 'height': 240, 'legend': True, 'grid': True, 'locale': 'en-US'})
+<div data-slot="chart"
+  x-data="{
+    data: {{ data.tojson() }}, series: {{ series.tojson() }}, x: '{{ x }}', type: '{{ type }}', h: {{ int(height) }},
+    w: 600, pad: { top: 12, right: 12, bottom: 28, left: 44 }, hover: -1,
+    color(s, i) { return s.color || `var(--chart-${(i % 5) + 1})` },
+    get max() {
+      const values = this.data.flatMap(d => this.series.map(s => Number(d[s.key]) || 0));
+      const top = Math.max(1, ...values), step = Math.pow(10, Math.floor(Math.log10(top)));
+      return Math.ceil(top / step) * step;
+    },
+    get innerW() { return this.w - this.pad.left - this.pad.right },
+    get innerH() { return this.h - this.pad.top - this.pad.bottom },
+    get band() { return this.innerW / Math.max(1, this.data.length) },
+    cx(i) { return this.pad.left + this.band * i + this.band / 2 },
+    y(v) { return this.pad.top + this.innerH - (Number(v) || 0) / this.max * this.innerH },
+    get ticks() { return [0, 0.25, 0.5, 0.75, 1].map(t => ({ v: this.max * t, y: this.y(this.max * t) })) },
+    fmt(v) { return new Intl.NumberFormat('{{ locale }}', { notation: 'compact' }).format(v) },
+    barW() { return Math.max(2, (this.band * 0.7) / this.series.length) },
+    barX(i, si) { return this.cx(i) - (this.barW() * this.series.length) / 2 + si * this.barW() },
+    line(s) { return this.data.map((d, i) => (i ? 'L' : 'M') + this.cx(i) + ' ' + this.y(d[s.key])).join(' ') },
+    area(s) { return this.line(s) + ` L${this.cx(this.data.length - 1)} ${this.y(0)} L${this.cx(0)} ${this.y(0)} Z` },
+    esc(v) { return String(v ?? '').replace(/[&<>]/g, c => '&' + ({ '&': 'amp', '<': 'lt', '>': 'gt' })[c] + ';').replace(/'/g, '&' + '#39;') },
+    draw() {
+      let out = '';
+      if ({{ str(bool(grid)).lower() }}) for (const t of this.ticks) {
+        out += `<line x1='${this.pad.left}' x2='${this.w - this.pad.right}' y1='${t.y}' y2='${t.y}' class='stroke-border' stroke-dasharray='3 3'/>`;
+        out += `<text x='${this.pad.left - 8}' y='${t.y}' text-anchor='end' dominant-baseline='middle' class='fill-muted-foreground'>${this.fmt(t.v)}</text>`;
+      }
+      this.data.forEach((d, i) => { out += `<text x='${this.cx(i)}' y='${this.h - 8}' text-anchor='middle' class='fill-muted-foreground'>${this.esc(d[this.x])}</text>` });
+      if (this.hover >= 0) out += `<rect x='${this.pad.left + this.band * this.hover}' y='${this.pad.top}' width='${this.band}' height='${this.innerH}' class='fill-muted' opacity='0.6'/>`;
+      this.series.forEach((s, si) => {
+        const c = this.color(s, si);
+        if (this.type === 'bar') {
+          this.data.forEach((d, i) => { out += `<rect x='${this.barX(i, si)}' y='${this.y(d[s.key])}' width='${Math.max(1, this.barW() - 2)}' height='${Math.max(0, this.y(0) - this.y(d[s.key]))}' rx='3' style='fill: ${c}'/>` });
+          return;
+        }
+        if (this.type === 'area') out += `<path d='${this.area(s)}' style='fill: ${c}; opacity: .18'/>`;
+        out += `<path d='${this.line(s)}' fill='none' stroke-width='2' stroke-linejoin='round' stroke-linecap='round' style='stroke: ${c}'/>`;
+        if (this.hover >= 0) out += `<circle cx='${this.cx(this.hover)}' cy='${this.y(this.data[this.hover][s.key])}' r='4' stroke-width='2' class='stroke-background' style='fill: ${c}'/>`;
+      });
+      return out;
+    },
+    track(e) {
+      const r = this.$refs.svg.getBoundingClientRect(), px = (e.clientX - r.left) / r.width * this.w;
+      const i = Math.floor((px - this.pad.left) / this.band);
+      this.hover = i >= 0 && i < this.data.length ? i : -1;
+    },
+  }"
+  x-init="const ro = new ResizeObserver(() => w = Math.max(240, $el.clientWidth)); ro.observe($el)"
+  {{ attributes.cn("relative w-full text-xs") }}>
+  <svg x-ref="svg" role="img" class="block w-full overflow-visible" x-bind:viewBox="`0 0 ${w} ${h}`" x-bind:style="`height: ${h}px`"
+    x-on:mousemove="track($event)" x-on:mouseleave="hover = -1" x-html="draw()"></svg>
+  <div x-show="hover >= 0" x-cloak class="pointer-events-none absolute top-2 z-10 grid min-w-32 gap-1.5 rounded-lg border bg-background px-2.5 py-1.5 shadow-xl"
+    x-bind:style="{ left: Math.min(Math.max(cx(hover) / w * 100, 0), 75) + '%' }">
+    <div class="font-medium" x-text="hover >= 0 ? data[hover][x] : ''"></div>
+    <template x-for="(s, si) in series" x-bind:key="s.key">
+      <div class="flex items-center gap-2">
+        <span class="size-2.5 shrink-0 rounded-[2px]" x-bind:style="`background: ${color(s, si)}`"></span>
+        <span class="text-muted-foreground" x-text="s.label || s.key"></span>
+        <span class="ml-auto font-mono font-medium tabular-nums" x-text="hover >= 0 ? new Intl.NumberFormat('{{ locale }}').format(data[hover][s.key]) : ''"></span>
+      </div>
+    </template>
+  </div>
+  @if(legend)
+  <div class="flex items-center justify-center gap-4 pt-3">
+    <template x-for="(s, si) in series" x-bind:key="s.key">
+      <div class="flex items-center gap-1.5">
+        <span class="size-2 shrink-0 rounded-[2px]" x-bind:style="`background: ${color(s, si)}`"></span>
+        <span x-text="s.label || s.key"></span>
+      </div>
+    </template>
+  </div>
+  @endif
+</div>

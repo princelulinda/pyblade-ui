@@ -1,0 +1,58 @@
+@props({'value': '', 'name': '', 'locale': 'en-US', 'week_start': 0, 'min': '', 'max': ''})
+<div data-slot="calendar"
+  x-data="{
+    value: '{{ value }}', locale: '{{ locale }}', weekStart: {{ int(week_start) }}, min: '{{ min }}', max: '{{ max }}',
+    month: null,
+    iso(d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0') },
+    parse(s) { const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d) },
+    init() { const base = this.value ? this.parse(this.value) : new Date(); this.month = new Date(base.getFullYear(), base.getMonth(), 1) },
+    get title() { return this.month.toLocaleDateString(this.locale, { month: 'long', year: 'numeric' }) },
+    get weekdays() {
+      const ref = new Date(2024, 0, 7 + this.weekStart);
+      return [...Array(7)].map((_, i) => new Date(ref.getFullYear(), ref.getMonth(), ref.getDate() + i).toLocaleDateString(this.locale, { weekday: 'short' }).slice(0, 2));
+    },
+    get days() {
+      const first = this.month, offset = (first.getDay() - this.weekStart + 7) % 7;
+      return [...Array(42)].map((_, i) => {
+        const d = new Date(first.getFullYear(), first.getMonth(), 1 - offset + i);
+        return { iso: this.iso(d), day: d.getDate(), outside: d.getMonth() !== first.getMonth() };
+      });
+    },
+    disabled(iso) { return Boolean((this.min && iso < this.min) || (this.max && iso > this.max)) },
+    shift(n) { this.month = new Date(this.month.getFullYear(), this.month.getMonth() + n, 1) },
+    select(iso) { if (this.disabled(iso)) return; this.value = iso; this.$dispatch('calendar-select', iso) },
+    focusDay(iso) { this.$nextTick(() => { const b = this.$root.querySelector(`[data-day='${iso}']`); if (b) b.focus() }) },
+    key(e, iso) {
+      const step = { ArrowLeft: -1, ArrowRight: 1, ArrowUp: -7, ArrowDown: 7 }[e.key];
+      if (!step) return;
+      e.preventDefault();
+      const d = this.parse(iso); d.setDate(d.getDate() + step);
+      if (d.getMonth() !== this.month.getMonth()) this.month = new Date(d.getFullYear(), d.getMonth(), 1);
+      this.focusDay(this.iso(d));
+    },
+  }"
+  {{ attributes.cn("w-fit p-3") }}>
+  <input type="hidden" name="{{ name }}" x-bind:value="value" x-bind:disabled="!'{{ name }}'" />
+  <div class="relative flex h-8 items-center justify-center">
+    <button type="button" x-on:click="shift(-1)" aria-label="Previous month" class="absolute left-0 inline-flex size-8 cursor-pointer items-center justify-center rounded-md hover:bg-accent hover:text-accent-foreground [&_svg]:size-4">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+    </button>
+    <div class="text-sm font-medium capitalize" aria-live="polite" x-text="title"></div>
+    <button type="button" x-on:click="shift(1)" aria-label="Next month" class="absolute right-0 inline-flex size-8 cursor-pointer items-center justify-center rounded-md hover:bg-accent hover:text-accent-foreground [&_svg]:size-4">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+    </button>
+  </div>
+  <div role="grid" class="mt-4 grid grid-cols-7 gap-y-1 text-center">
+    <template x-for="w in weekdays" x-bind:key="w">
+      <div class="flex h-8 items-center justify-center text-[0.8rem] font-normal text-muted-foreground capitalize" x-text="w"></div>
+    </template>
+    <template x-for="d in days" x-bind:key="d.iso">
+      <button type="button" role="gridcell" x-bind:data-day="d.iso" x-text="d.day"
+        x-bind:tabindex="d.iso === (value || iso(new Date())) ? 0 : -1"
+        x-bind:aria-selected="d.iso === value" x-bind:disabled="disabled(d.iso)"
+        x-bind:data-selected="d.iso === value" x-bind:data-today="d.iso === iso(new Date())" x-bind:data-outside="d.outside"
+        x-on:click="select(d.iso)" x-on:keydown="key($event, d.iso)"
+        class="mx-auto inline-flex size-8 cursor-pointer items-center justify-center rounded-md text-sm font-normal transition-colors outline-none hover:bg-accent hover:text-accent-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-40 data-[outside=true]:text-muted-foreground/60 data-[today=true]:bg-accent data-[today=true]:text-accent-foreground data-[selected=true]:bg-primary data-[selected=true]:text-primary-foreground"></button>
+    </template>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<div data-slot="sidebar" class="text-sidebar-foreground group-data-[side=right]/sidebar:order-last">
+  <div data-slot="sidebar-gap" class="relative hidden w-(--sidebar-width) bg-transparent transition-[width] duration-200 ease-linear md:block group-data-[collapsible=offcanvas]/sidebar:w-0 group-data-[collapsible=icon]/sidebar:w-(--sidebar-width-icon) group-data-[variant=floating]/sidebar:group-data-[collapsible=icon]/sidebar:w-[calc(var(--sidebar-width-icon)+1rem)] group-data-[variant=inset]/sidebar:group-data-[collapsible=icon]/sidebar:w-[calc(var(--sidebar-width-icon)+1rem)]"></div>
+  <div data-slot="sidebar-container" class="fixed inset-y-0 z-50 flex h-svh w-(--sidebar-width-mobile) transition-[left,right,width,translate] duration-200 ease-linear md:z-10 md:w-(--sidebar-width)
+    group-data-[side=left]/sidebar:left-0 group-data-[side=right]/sidebar:right-0
+    max-md:group-data-[mobile=closed]/sidebar:group-data-[side=left]/sidebar:-translate-x-full max-md:group-data-[mobile=closed]/sidebar:group-data-[side=right]/sidebar:translate-x-full
+    md:group-data-[collapsible=offcanvas]/sidebar:group-data-[side=left]/sidebar:left-[calc(var(--sidebar-width)*-1)] md:group-data-[collapsible=offcanvas]/sidebar:group-data-[side=right]/sidebar:right-[calc(var(--sidebar-width)*-1)]
+    md:group-data-[collapsible=icon]/sidebar:w-(--sidebar-width-icon)
+    md:group-data-[variant=floating]/sidebar:p-2 md:group-data-[variant=inset]/sidebar:p-2
+    md:group-data-[variant=floating]/sidebar:group-data-[collapsible=icon]/sidebar:w-[calc(var(--sidebar-width-icon)+1rem+2px)] md:group-data-[variant=inset]/sidebar:group-data-[collapsible=icon]/sidebar:w-[calc(var(--sidebar-width-icon)+1rem+2px)]
+    group-data-[variant=sidebar]/sidebar:group-data-[side=left]/sidebar:border-r group-data-[variant=sidebar]/sidebar:group-data-[side=right]/sidebar:border-l border-sidebar-border">
+    <div data-slot="sidebar-inner" {{ attributes.cn("flex h-full w-full flex-col bg-sidebar md:group-data-[variant=floating]/sidebar:rounded-lg md:group-data-[variant=floating]/sidebar:border md:group-data-[variant=floating]/sidebar:border-sidebar-border md:group-data-[variant=floating]/sidebar:shadow-sm") }}>{{ slot }}</div>
+  </div>
+  <div data-slot="sidebar-overlay" x-show="openMobile" x-cloak x-transition.opacity x-on:click="openMobile = false" class="fixed inset-0 z-40 bg-black/50 md:hidden"></div>
+</div>

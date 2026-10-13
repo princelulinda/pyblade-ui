@@ -1,0 +1,7 @@
+<div data-slot="select" class="relative w-full">
+  <select {{ attributes.cn(
+      "flex h-9 w-full appearance-none items-center rounded-md border border-input bg-transparent py-2 pr-9 pl-3 text-sm shadow-xs transition-[color,box-shadow] outline-none disabled:cursor-not-allowed disabled:opacity-50 dark:bg-input/30 dark:[&>option]:bg-popover",
+      "focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 aria-invalid:border-destructive",
+  ) }}>{{ slot }}</select>
+  <svg class="pointer-events-none absolute top-1/2 right-3 size-4 -translate-y-1/2 opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+</div>

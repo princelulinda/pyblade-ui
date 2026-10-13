@@ -1,0 +1,34 @@
+@props({'with_handle': False})
+<div role="separator" tabindex="0" data-slot="resizable-handle"
+  data-orientation="horizontal" x-bind:data-orientation="direction"
+  x-bind:aria-orientation="direction === 'horizontal' ? 'vertical' : 'horizontal'"
+  x-data="{
+    from: null,
+    grow(el) { return parseFloat(el.style.flexGrow) || 1 },
+    resize(delta) {
+      const a = $el.previousElementSibling, b = $el.nextElementSibling, total = this.grow(a) + this.grow(b);
+      const min = Math.max(parseFloat(a.dataset.min) || 0, 0) / 100 * total, minB = (parseFloat(b.dataset.min) || 0) / 100 * total;
+      const next = Math.min(Math.max(this.grow(a) + delta * total, min), total - minB);
+      a.style.flexGrow = next; b.style.flexGrow = total - next;
+    },
+    down(e) { this.from = direction === 'horizontal' ? e.clientX : e.clientY; $el.setPointerCapture(e.pointerId) },
+    move(e) {
+      if (this.from === null) return;
+      const a = $el.previousElementSibling, b = $el.nextElementSibling, pos = direction === 'horizontal' ? e.clientX : e.clientY;
+      const span = direction === 'horizontal' ? a.offsetWidth + b.offsetWidth : a.offsetHeight + b.offsetHeight;
+      this.resize((pos - this.from) / span); this.from = pos;
+    },
+  }"
+  x-on:pointerdown="down($event)" x-on:pointermove="move($event)" x-on:pointerup="from = null" x-on:pointercancel="from = null"
+  x-on:keydown.left.prevent="direction === 'horizontal' && resize(-0.05)" x-on:keydown.right.prevent="direction === 'horizontal' && resize(0.05)"
+  x-on:keydown.up.prevent="direction === 'vertical' && resize(-0.05)" x-on:keydown.down.prevent="direction === 'vertical' && resize(0.05)"
+  {{ attributes.cn(
+    "relative flex shrink-0 touch-none items-center justify-center bg-border outline-none select-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-1",
+    "w-px cursor-col-resize after:absolute after:inset-y-0 after:left-1/2 after:w-2 after:-translate-x-1/2 data-[orientation=vertical]:h-px data-[orientation=vertical]:w-full data-[orientation=vertical]:cursor-row-resize data-[orientation=vertical]:after:inset-x-0 data-[orientation=vertical]:after:inset-y-auto data-[orientation=vertical]:after:left-0 data-[orientation=vertical]:after:h-2 data-[orientation=vertical]:after:w-full data-[orientation=vertical]:after:translate-x-0 data-[orientation=vertical]:after:-translate-y-1/2",
+  ) }}>
+  @if(with_handle)
+  <div class="z-10 flex h-4 w-3 items-center justify-center rounded-xs border bg-border" x-bind:class="{ 'rotate-90': direction === 'vertical' }">
+    <svg class="size-2.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="12" r="1"/><circle cx="9" cy="5" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="19" r="1"/></svg>
+  </div>
+  @endif
+</div>

@@ -1,0 +1,15 @@
+<div data-slot="command"
+  x-data="{
+    search: '',
+    match(text) { return text.toLowerCase().includes(this.search.trim().toLowerCase()) },
+    all() { return [...this.$refs.list.querySelectorAll('[data-slot=command-item]')] },
+    found() { return this.all().filter(i => this.match(i.textContent)) },
+    items() { return this.all().filter(i => i.offsetParent !== null) },
+    move(step) {
+      const items = this.items(), at = items.indexOf(document.activeElement);
+      const next = items[at + step] || items[step > 0 ? 0 : items.length - 1];
+      if (next) next.focus();
+    },
+  }"
+  x-on:keydown.down.prevent="move(1)" x-on:keydown.up.prevent="move(-1)"
+  {{ attributes.cn("flex h-full w-full flex-col overflow-hidden rounded-md bg-popover text-popover-foreground") }}>{{ slot }}</div>

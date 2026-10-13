@@ -1,0 +1,10 @@
+@props({'variant': 'default'})
+<div role="alert" data-slot="alert" {{ attributes.cn(
+    "relative grid w-full grid-cols-[0_1fr] content-start items-start gap-y-0.5 rounded-lg border px-4 py-3 text-sm has-[>svg]:grid-cols-[calc(var(--spacing)*4)_1fr] has-[>svg]:gap-x-3 [&>svg]:size-4 [&>svg]:translate-y-0.5 [&>svg]:text-current",
+    {
+        'default': 'bg-card text-card-foreground',
+        'destructive': 'bg-card text-destructive [&>svg]:text-current *:data-[slot=alert-description]:text-destructive/90',
+        'success': 'bg-card text-success *:data-[slot=alert-description]:text-success/90',
+        'warning': 'bg-card text-warning *:data-[slot=alert-description]:text-warning/90',
+    }[variant],
+) }}>{{ slot }}</div>

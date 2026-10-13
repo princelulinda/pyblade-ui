@@ -1,0 +1,5 @@
+@props({'heading': ''})
+<div role="group" data-slot="command-group" x-show="[...$el.querySelectorAll('[data-slot=command-item]')].some(i => match(i.textContent))" {{ attributes.cn("overflow-hidden p-1 text-foreground") }}>
+  <div data-slot="command-group-heading" class="px-2 py-1.5 text-xs font-medium text-muted-foreground">{{ heading }}</div>
+  {{ slot }}
+</div>

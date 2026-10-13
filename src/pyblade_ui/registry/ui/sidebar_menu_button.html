@@ -1,0 +1,17 @@
+@props({'href': None, 'active': False, 'size': 'default', 'variant': 'default', 'tooltip': ''})
+<a data-slot="sidebar-menu-button" @if(href)href="{{ href }}"@endif tabindex="0" @if(active)aria-current="page"@endif data-active="{{ str(bool(active)).lower() }}" data-size="{{ size }}" {{ attributes.cn(
+    "group/menu-button peer/menu-button relative flex w-full cursor-pointer items-center gap-2 rounded-md p-2 text-left text-sm whitespace-nowrap ring-sidebar-ring outline-hidden transition-[width,height,padding] select-none",
+    "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground aria-disabled:pointer-events-none aria-disabled:opacity-50",
+    "data-[active=true]:bg-sidebar-accent data-[active=true]:font-medium data-[active=true]:text-sidebar-accent-foreground group-has-data-[slot=sidebar-menu-action]/menu-item:pr-8",
+    "[&>span:not([data-slot])]:min-w-0 [&>span:not([data-slot])]:truncate [&>svg]:size-4 [&>svg]:shrink-0",
+    "md:group-data-[collapsible=icon]/sidebar:size-8! md:group-data-[collapsible=icon]/sidebar:p-2! md:group-data-[collapsible=icon]/sidebar:[&>:not(:first-child):not([data-slot=sidebar-tooltip])]:hidden",
+    {
+        'default': '',
+        'outline': 'bg-background shadow-[0_0_0_1px_var(--sidebar-border)] hover:shadow-[0_0_0_1px_var(--sidebar-accent)]',
+    }[variant],
+    {
+        'default': 'h-8 text-sm',
+        'sm': 'h-7 text-xs',
+        'lg': 'h-12 text-sm md:group-data-[collapsible=icon]/sidebar:p-0!',
+    }[size],
+) }}>{{ slot }}@if(tooltip)<span data-slot="sidebar-tooltip" role="tooltip" class="pointer-events-none absolute top-1/2 left-full z-50 ml-3 hidden w-max -translate-y-1/2 rounded-md bg-foreground px-3 py-1.5 text-xs font-normal text-background opacity-0 transition-opacity group-hover/menu-button:opacity-100 group-focus-visible/menu-button:opacity-100 md:group-data-[collapsible=icon]/sidebar:block">{{ tooltip }}</span>@endif</a>

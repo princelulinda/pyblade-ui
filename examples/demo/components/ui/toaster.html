@@ -1,0 +1,34 @@
+@props({'position': 'bottom-right', 'duration': 4000})
+<div data-slot="toaster" aria-live="polite"
+  x-data="{
+    toasts: [],
+    add(detail) {
+      const toast = { id: Date.now() + Math.random(), variant: 'default', ...(typeof detail === 'string' ? { title: detail } : detail) };
+      this.toasts.push(toast);
+      setTimeout(() => this.remove(toast.id), toast.duration || {{ duration }});
+    },
+    remove(id) { this.toasts = this.toasts.filter(t => t.id !== id) },
+  }"
+  x-init="window.toast = (detail) => window.dispatchEvent(new CustomEvent('toast', { detail }))"
+  x-on:toast.window="add($event.detail)"
+  {{ attributes.cn(
+    "pointer-events-none fixed z-[100] flex w-full max-w-sm flex-col gap-2 p-4",
+    {
+        'top-left': 'top-0 left-0', 'top-center': 'top-0 left-1/2 -translate-x-1/2', 'top-right': 'top-0 right-0',
+        'bottom-left': 'bottom-0 left-0', 'bottom-center': 'bottom-0 left-1/2 -translate-x-1/2', 'bottom-right': 'bottom-0 right-0',
+    }[position],
+  ) }}>
+  <template x-for="toast in toasts" x-bind:key="toast.id">
+    <div x-transition.opacity role="status"
+      class="pointer-events-auto flex w-full items-start gap-3 rounded-lg border bg-popover p-4 text-sm text-popover-foreground shadow-lg"
+      x-bind:class="{ 'border-destructive/50 text-destructive': toast.variant === 'destructive', 'border-success/50': toast.variant === 'success' }">
+      <div class="grid flex-1 gap-1">
+        <p class="font-semibold" x-text="toast.title"></p>
+        <p class="text-muted-foreground" x-show="toast.description" x-text="toast.description"></p>
+      </div>
+      <button type="button" class="cursor-pointer opacity-60 hover:opacity-100" x-on:click="remove(toast.id)" aria-label="Close">
+        <svg class="size-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+    </div>
+  </template>
+</div>

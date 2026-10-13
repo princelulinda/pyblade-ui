@@ -1,0 +1,2 @@
+@props({'value': ''})
+<li data-slot="navigation-menu-item" x-data="{ value: '{{ value }}' || Math.random().toString(36).slice(2) }" {{ attributes.cn("relative") }}>{{ slot }}</li>

@@ -1,0 +1,10 @@
+@props({'align': 'inline-start'})
+<div role="group" data-slot="input-group-addon" data-align="{{ align }}" x-data x-on:click="$event.target.closest('button') || $el.parentElement.querySelector('[data-slot=input-group-control]')?.focus()" {{ attributes.cn(
+    "flex h-auto cursor-text items-center justify-center gap-2 py-1.5 text-sm font-medium text-muted-foreground select-none [&>kbd]:rounded-[calc(var(--radius)-5px)] [&>svg:not([class*='size-'])]:size-4",
+    {
+        'inline-start': 'order-first pl-3 has-[>button]:ml-[-0.45rem]',
+        'inline-end': 'order-last pr-3 has-[>button]:mr-[-0.45rem]',
+        'block-start': 'order-first w-full justify-start px-3 pt-3',
+        'block-end': 'order-last w-full justify-start px-3 pb-3',
+    }[align],
+) }}>{{ slot }}</div>

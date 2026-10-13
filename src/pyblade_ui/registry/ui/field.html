@@ -1,0 +1,8 @@
+@props({'orientation': 'vertical', 'invalid': False, 'errors': None, 'name': ''})
+<div role="group" data-slot="field" data-orientation="{{ orientation }}" data-invalid="{{ str(bool(invalid)).lower() }}" data-error="@if(errors and name)@error(name)true@enderror@endif" {{ attributes.cn(
+    "group/field flex w-full gap-3 data-[invalid=true]:text-destructive data-[error=true]:text-destructive",
+    {
+        'vertical': 'flex-col [&>*]:w-full',
+        'horizontal': 'flex-row items-center [&>[data-slot=field-label]]:flex-auto',
+    }[orientation],
+) }}>{{ slot }}</div>

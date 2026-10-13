@@ -1,0 +1,87 @@
+@props({'rows': [], 'columns': [], 'page_size': 10, 'search': '', 'search_placeholder': 'Filter...', 'selectable': False, 'locale': 'en-US', 'currency': 'USD', 'empty': 'No results.'})
+<div data-slot="data-table"
+  x-data="{
+    rows: {{ rows.tojson() }}, columns: {{ columns.tojson() }}, searchKey: '{{ search }}',
+    query: '', sortKey: '', sortDir: 1, page: 0, size: {{ int(page_size) }}, selected: [],
+    get filtered() {
+      const q = this.query.trim().toLowerCase();
+      const out = q ? this.rows.filter(r => String(this.searchKey ? r[this.searchKey] : Object.values(r).join(' ')).toLowerCase().includes(q)) : [...this.rows];
+      if (this.sortKey) out.sort((a, b) => (a[this.sortKey] > b[this.sortKey] ? 1 : a[this.sortKey] < b[this.sortKey] ? -1 : 0) * this.sortDir);
+      return out;
+    },
+    get pages() { return Math.max(1, Math.ceil(this.filtered.length / this.size)) },
+    get visible() { return this.filtered.slice(this.page * this.size, (this.page + 1) * this.size) },
+    sort(key) { this.sortDir = this.sortKey === key ? -this.sortDir : 1; this.sortKey = key; this.page = 0 },
+    format(value, col) {
+      if (value === null || value === undefined) return '';
+      if (col.format === 'currency') return new Intl.NumberFormat('{{ locale }}', { style: 'currency', currency: col.currency || '{{ currency }}' }).format(value);
+      if (col.format === 'number') return new Intl.NumberFormat('{{ locale }}').format(value);
+      if (col.format === 'date') return new Date(value).toLocaleDateString('{{ locale }}', { dateStyle: 'medium' });
+      return value;
+    },
+    key(row, i) { return row.id ?? i },
+    isSelected(row, i) { return this.selected.includes(this.key(row, i)) },
+    toggle(row, i) { const k = this.key(row, i); this.selected = this.selected.includes(k) ? this.selected.filter(x => x !== k) : [...this.selected, k] },
+    get allOnPage() { return this.visible.length > 0 && this.visible.every((r, i) => this.isSelected(r, this.page * this.size + i)) },
+    togglePage() {
+      const keys = this.visible.map((r, i) => this.key(r, this.page * this.size + i));
+      this.selected = this.allOnPage ? this.selected.filter(k => !keys.includes(k)) : [...new Set([...this.selected, ...keys])];
+    },
+  }"
+  x-effect="selected; $dispatch('selection-change', selected)"
+  {{ attributes.cn("w-full") }}>
+  <div class="flex items-center gap-2 pb-4">
+    <input type="text" x-model="query" x-on:input="page = 0" placeholder="{{ search_placeholder }}" class="flex h-9 w-full max-w-sm min-w-0 rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-xs outline-none placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 dark:bg-input/30" />
+    {{ slot }}
+  </div>
+  <div class="relative w-full overflow-x-auto rounded-md border">
+    <table class="w-full caption-bottom text-sm">
+      <thead class="[&_tr]:border-b">
+        <tr class="border-b">
+          @if(selectable)
+          <th class="h-10 w-10 px-2 text-left align-middle"><input type="checkbox" aria-label="Select all" x-bind:checked="allOnPage" x-on:change="togglePage()" class="size-4 cursor-pointer accent-primary align-middle" /></th>
+          @endif
+          <template x-for="col in columns" x-bind:key="col.key">
+            <th class="h-10 px-2 text-left align-middle font-medium whitespace-nowrap text-foreground" x-bind:class="col.align === 'right' && 'text-right'">
+              <template x-if="col.sortable">
+                <button type="button" x-on:click="sort(col.key)" class="-mx-2 inline-flex h-8 cursor-pointer items-center gap-1.5 rounded-md px-2 hover:bg-accent hover:text-accent-foreground">
+                  <span x-text="col.label"></span>
+                  <svg class="size-3.5 opacity-60" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" x-bind:class="sortKey === col.key && 'opacity-100'" x-bind:style="sortKey === col.key && sortDir < 0 ? 'transform: rotate(180deg)' : ''"><path d="m7 15 5 5 5-5"/><path d="m7 9 5-5 5 5"/></svg>
+                </button>
+              </template>
+              <template x-if="!col.sortable"><span x-text="col.label"></span></template>
+            </th>
+          </template>
+        </tr>
+      </thead>
+      <tbody class="[&_tr:last-child]:border-0">
+        <template x-for="(row, i) in visible" x-bind:key="key(row, page * size + i)">
+          <tr class="border-b transition-colors hover:bg-muted/50" x-bind:data-state="isSelected(row, page * size + i) ? 'selected' : null" x-bind:class="isSelected(row, page * size + i) && 'bg-muted'">
+            @if(selectable)
+            <td class="w-10 p-2 align-middle"><input type="checkbox" aria-label="Select row" x-bind:checked="isSelected(row, page * size + i)" x-on:change="toggle(row, page * size + i)" class="size-4 cursor-pointer accent-primary align-middle" /></td>
+            @endif
+            <template x-for="col in columns" x-bind:key="col.key">
+              <td class="p-2 align-middle whitespace-nowrap" x-bind:class="col.align === 'right' && 'text-right tabular-nums'">
+                <template x-if="col.format === 'badge'">
+                  <span class="inline-flex w-fit items-center rounded-md border px-2 py-0.5 text-xs font-medium" x-text="row[col.key]"></span>
+                </template>
+                <template x-if="col.format !== 'badge'"><span x-text="format(row[col.key], col)"></span></template>
+              </td>
+            </template>
+          </tr>
+        </template>
+        <tr x-show="!visible.length"><td x-bind:colspan="columns.length + {{ int(bool(selectable)) }}" class="h-24 text-center text-muted-foreground">{{ empty }}</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="flex items-center justify-between gap-2 py-4 text-sm text-muted-foreground">
+    <div>
+      @if(selectable)<span x-text="selected.length"></span> / <span x-text="filtered.length"></span> selected@endif
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="tabular-nums" x-text="(page + 1) + ' / ' + pages"></span>
+      <button type="button" x-on:click="page--" x-bind:disabled="page === 0" class="inline-flex h-8 cursor-pointer items-center rounded-md border bg-background px-3 text-sm font-medium text-foreground shadow-xs hover:bg-accent disabled:pointer-events-none disabled:opacity-50 dark:border-input dark:bg-input/30">Previous</button>
+      <button type="button" x-on:click="page++" x-bind:disabled="page >= pages - 1" class="inline-flex h-8 cursor-pointer items-center rounded-md border bg-background px-3 text-sm font-medium text-foreground shadow-xs hover:bg-accent disabled:pointer-events-none disabled:opacity-50 dark:border-input dark:bg-input/30">Next</button>
+    </div>
+  </div>
+</div>

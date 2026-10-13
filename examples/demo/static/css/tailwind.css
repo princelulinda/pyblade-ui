@@ -1,0 +1,6 @@
+@import "tailwindcss";
+@import "./theme.css";
+
+/* Where Tailwind looks for the classes you use. */
+@source "../../templates";
+@source "../../components";

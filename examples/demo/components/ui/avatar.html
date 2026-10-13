@@ -1,0 +1,8 @@
+@props({'src': None, 'alt': '', 'fallback': ''})
+<span data-slot="avatar" {{ attributes.cn("relative flex size-8 shrink-0 overflow-hidden rounded-full") }}>
+  @if(src)
+  <img src="{{ src }}" alt="{{ alt }}" class="aspect-square size-full object-cover" />
+  @else
+  <span class="flex size-full items-center justify-center rounded-full bg-muted text-xs font-medium">{{ fallback }}</span>
+  @endif
+</span>

@@ -1,0 +1,24 @@
+@props({'open': True, 'collapsible': 'offcanvas', 'variant': 'sidebar', 'side': 'left'})
+<div data-slot="sidebar-wrapper"
+  data-state="{{ {'True': 'expanded', 'False': 'collapsed'}[str(bool(open))] }}"
+  data-collapsible="{{ {'True': '', 'False': collapsible}[str(bool(open))] }}"
+  data-variant="{{ variant }}" data-side="{{ side }}" data-mobile="closed"
+  x-data="{
+    open: {{ str(bool(open)).lower() }},
+    openMobile: false,
+    mobile: window.matchMedia('(max-width: 767px)').matches,
+    setOpen(value) {
+      this.open = value;
+      document.cookie = 'sidebar_state=' + value + '; path=/; max-age=604800; samesite=lax';
+    },
+    toggle() { this.mobile ? (this.openMobile = !this.openMobile) : this.setOpen(!this.open) },
+  }"
+  x-init="window.matchMedia('(max-width: 767px)').addEventListener('change', (e) => { mobile = e.matches; openMobile = false })"
+  x-bind:data-state="open ? 'expanded' : 'collapsed'"
+  x-bind:data-collapsible="open ? '' : '{{ collapsible }}'"
+  x-bind:data-mobile="openMobile ? 'open' : 'closed'"
+  x-on:keydown.window="($event.metaKey || $event.ctrlKey) && $event.key.toLowerCase() === 'b' && ($event.preventDefault(), toggle())"
+  x-on:keydown.escape.window="openMobile = false"
+  x-effect="document.body.classList.toggle('overflow-hidden', openMobile && mobile)"
+  style="--sidebar-width: 16rem; --sidebar-width-mobile: 18rem; --sidebar-width-icon: 3rem"
+  {{ attributes.cn("group/sidebar flex min-h-svh w-full data-[variant=inset]:bg-sidebar") }}>{{ slot }}</div>

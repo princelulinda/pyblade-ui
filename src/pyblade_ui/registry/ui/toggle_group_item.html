@@ -1,0 +1,6 @@
+@props({'value': '', 'variant': 'default'})
+<button type="button" data-slot="toggle-group-item" x-on:click="toggle('{{ value }}')"
+  x-bind:aria-pressed="has('{{ value }}')" x-bind:data-state="has('{{ value }}') ? 'on' : 'off'" {{ attributes.cn(
+    "inline-flex h-9 min-w-9 flex-1 shrink-0 cursor-pointer items-center justify-center gap-2 px-2 text-sm font-medium whitespace-nowrap transition-[color,box-shadow] outline-none hover:bg-muted hover:text-muted-foreground focus:z-10 focus-visible:z-10 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 data-[state=on]:bg-accent data-[state=on]:text-accent-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+    {'default': 'bg-transparent', 'outline': 'border border-input bg-transparent shadow-xs hover:bg-accent hover:text-accent-foreground [&:not(:first-child)]:border-l-0'}[variant],
+) }}>{{ slot }}</button>

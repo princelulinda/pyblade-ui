@@ -1,0 +1,7 @@
+@props({'align': 'start'})
+<div data-slot="navigation-menu-content" x-show="active === value" x-cloak x-on:mouseenter="show(value)"
+  x-transition:enter="duration-150 ease-out" x-transition:enter-start="opacity-0 -translate-y-1" x-transition:enter-end="opacity-100 translate-y-0"
+  {{ attributes.cn(
+    "absolute top-full z-50 mt-1.5 w-max overflow-hidden rounded-md border bg-popover p-2 text-popover-foreground shadow-md",
+    {'start': 'left-0', 'center': 'left-1/2 -translate-x-1/2', 'end': 'right-0'}[align],
+  ) }}>{{ slot }}</div>

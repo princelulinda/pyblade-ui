@@ -1,0 +1,2 @@
+@props({'open': False})
+<div data-slot="collapsible" x-data="{ open: {{ str(bool(open)).lower() }} }" x-bind:data-state="open ? 'open' : 'closed'" {{ attributes.cn("") }}>{{ slot }}</div>

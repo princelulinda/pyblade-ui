@@ -1,0 +1,32 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pyblade-ui"
+version = "0.1.0"
+description = "Copy-paste UI components and themes for PyBlade, in the spirit of shadcn/ui."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.11"
+dependencies = ["pyblade>=0.3.0"]
+keywords = ["pyblade", "components", "tailwindcss", "ui", "shadcn"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Framework :: Django",
+    "Framework :: Flask",
+    "Programming Language :: Python :: 3",
+    "Topic :: Software Development :: User Interfaces",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[project.scripts]
+pyblade-ui = "pyblade_ui.cli.main:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pyblade_ui"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

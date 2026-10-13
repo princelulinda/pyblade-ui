@@ -1,0 +1,10 @@
+@props({'trigger': '', 'align': 'start'})
+<div data-slot="dropdown-menu" x-data="{ open: false }" x-on:keydown.escape="open = false" class="relative inline-block text-left">
+  <span data-slot="dropdown-menu-trigger" class="contents" x-on:click="open = !open">{{ trigger }}</span>
+  <div role="menu" data-slot="dropdown-menu-content" x-show="open" x-cloak x-on:click.outside="open = false" x-on:click="open = false"
+    x-transition:enter="duration-100 ease-out" x-transition:enter-start="scale-95 opacity-0" x-transition:enter-end="scale-100 opacity-100"
+    {{ attributes.cn(
+      "absolute top-full z-50 mt-1 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md",
+      {'start': 'left-0 origin-top-left', 'end': 'right-0 origin-top-right'}[align],
+    ) }}>{{ slot }}</div>
+</div>
