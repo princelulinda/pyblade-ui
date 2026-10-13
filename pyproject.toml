@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "pyblade-ui"
-version = "0.1.0"
+version = "0.2.0"
 description = "Copy-paste UI components and themes for PyBlade, in the spirit of shadcn/ui."
 readme = "README.md"
 license = "MIT"
